@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Denise Bots{% endblock %}
+
+{% block content %}
+<section class="hero animate-fade">
+    <h1>Powering Communities with <span class="logo-accent">Denise Bots</span></h1>
+    <p>A unified dashboard to manage, monitor, and scale your Discord bots. Secure, efficient, and built for administrators.</p>
+    
+    {% if not user.is_authenticated %}
+        <a href="{% url 'account_login' %}" class="btn btn-discord btn-large">
+            <i class="fab fa-discord"></i> Get Started with Discord
+        </a>
+    {% else %}
+        <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+    {% endif %}
+</section>
+
+<section class="grid">
+    <div class="glass-card">
+        <i class="fas fa-shield-alt bot-icon"></i>
+        <h3>Secure Management</h3>
+        <p>OAuth2 Discord integration ensures only authorized users access your bot's core settings.</p>
+    </div>
+    <div class="glass-card">
+        <i class="fas fa-bolt bot-icon"></i>
+        <h3>Unified Database</h3>
+        <p>All your bots share a centralized SQLite database for seamless data synchronization.</p>
+    </div>
+    <div class="glass-card">
+        <i class="fas fa-chart-line bot-icon"></i>
+        <h3>Real-time Stats</h3>
+        <p>Monitor donation leaderboards, ticket counts, and user reputation at a glance.</p>
+    </div>
+</section>
+{% endblock %}

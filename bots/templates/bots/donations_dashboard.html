@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Donations Dashboard - Denise Bots{% endblock %}
+
+{% block content %}
+<div class="dashboard-header animate-fade">
+    <div>
+        <h1>Donations Management</h1>
+        <p class="text-muted">Manage categories, view donors, and configure autoroles.</p>
+    </div>
+    <div class="actions">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
+</div>
+
+<div class="grid animate-fade">
+    <!-- Categories List -->
+    <div class="glass-card">
+        <h3>Categories</h3>
+        <div class="list-container">
+            {% for category in categories %}
+                <div class="list-item">
+                    <span>{{ category.name }}</span>
+                    <div class="item-actions">
+                        <a href="#" class="btn-icon text-muted"><i class="fas fa-edit"></i></a>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted">No categories found.</p>
+            {% endfor %}
+        </div>
+        <button class="btn btn-primary mt-1" style="width: 100%"><i class="fas fa-plus"></i> Create Category</button>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="glass-card">
+        <h3>Quick Stats</h3>
+        <div class="stats-mini">
+            <div class="stat-mini-item">
+                <span class="stat-label">Total Categories</span>
+                <span class="stat-value">{{ categories.count }}</span>
+            </div>
+            <div class="stat-mini-item">
+                <span class="stat-label">Total Donations</span>
+                <span class="stat-value">Coming Soon</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .list-container { margin-top: 1rem; }
+    .list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    .mt-1 { margin-top: 1rem; }
+    .stats-mini { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+    .stat-mini-item { display: flex; justify-content: space-between; align-items: center; }
+    .stat-mini-item .stat-value { font-size: 1.2rem; }
+</style>
+{% endblock %}
