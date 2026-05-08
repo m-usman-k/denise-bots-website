@@ -5,6 +5,5 @@ requests
 whitenoise
 gunicorn
 pymongo
-djongo
 dnspython
 python-dotenv

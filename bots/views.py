@@ -1,6 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Bot, DonationCategory, UserDonation, DonationSettings
+import os
+from .models import Bot
+from pymongo import MongoClient
+
+def get_mongo_db():
+    client = MongoClient(os.environ.get('MONGODB_URI', 'mongodb://localhost:27017'))
+    return client["denise_bots_db"]
 
 @login_required
 def bot_list(request):
@@ -15,8 +21,9 @@ def bot_detail(request, bot_name):
         return redirect('home')
     
     if bot_name == 'donations':
-        categories = DonationCategory.objects.all()
-        # For simplicity, we'll just show the donation dashboard
+        db = get_mongo_db()
+        col = db["bots_donationcategory"]
+        categories = list(col.find())
         return render(request, 'bots/donations_dashboard.html', {'categories': categories})
     
     # Handle other bots...
