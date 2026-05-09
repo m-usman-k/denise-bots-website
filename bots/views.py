@@ -35,11 +35,30 @@ def bot_detail(request, bot_name):
     if not request.user.is_super_admin:
         return redirect('home')
     
-    if bot_name == 'donations':
-        db = get_mongo_db()
-        col = db["bots_donationcategory"]
-        categories = list(col.find())
-        return render(request, 'bots/donations_dashboard.html', {'categories': categories})
+    # Map bot names to their MongoDB collections
+    collection_map = {
+        'donations': 'bots_donationcategory',
+        'giveaway': 'bots_giveaway',
+        'reputation': 'bots_reputation',
+        'ticket': 'bots_ticket',
+        'wintracker': 'bots_win',
+    }
     
-    # Handle other bots...
-    return render(request, 'bots/bot_detail.html', {'bot_name': bot_name})
+    col_name = collection_map.get(bot_name)
+    if not col_name:
+        return render(request, 'bots/bot_detail.html', {'bot_name': bot_name, 'data': []})
+
+    db = get_mongo_db()
+    col = db[col_name]
+    
+    # Fetch data (limited to 50 for performance)
+    data = list(col.find().limit(50))
+    
+    # Special template for donations if you want to keep it, 
+    # otherwise we use the unified bot_detail.html
+    template_name = 'bots/donations_dashboard.html' if bot_name == 'donations' else 'bots/bot_detail.html'
+    
+    return render(request, template_name, {
+        'bot_name': bot_name,
+        'data': data
+    })
