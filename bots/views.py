@@ -7,7 +7,10 @@ from pymongo import MongoClient
 def get_mongo_db():
     uri = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/')
     db_name = os.environ.get('MONGO_DB_NAME', 'denise_bots')
-    client = MongoClient(uri)
+    auth_source = os.environ.get('MONGO_AUTH_SOURCE', 'admin')
+    
+    # We pass authSource explicitly to be 100% sure PyMongo knows where to auth
+    client = MongoClient(uri, authSource=auth_source)
     return client[db_name]
 
 @login_required
