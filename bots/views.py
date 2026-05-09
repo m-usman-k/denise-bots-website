@@ -5,8 +5,10 @@ from .models import Bot
 from pymongo import MongoClient
 
 def get_mongo_db():
-    client = MongoClient(os.environ.get('MONGODB_URI', 'mongodb://localhost:27017'))
-    return client["denise_bots_db"]
+    uri = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/')
+    db_name = os.environ.get('MONGO_DB_NAME', 'denise_bots')
+    client = MongoClient(uri)
+    return client[db_name]
 
 @login_required
 def bot_list(request):
