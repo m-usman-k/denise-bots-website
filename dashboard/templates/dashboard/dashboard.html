@@ -6,7 +6,7 @@
 <div class="animate-fade">
     <div class="dashboard-header" style="margin-bottom: 5rem;">
         <h1>Control Center</h1>
-        <p style="font-size: 1.8rem; font-weight: 800; color: var(--white); text-transform: uppercase; -webkit-text-stroke: 1px #000;">Managing the bot universe.</p>
+        <p style="font-size: 1.4rem; font-weight: 800; color: var(--bg-outer); text-transform: uppercase;">Managing the bot family.</p>
     </div>
 
     <!-- Stats -->
@@ -24,7 +24,7 @@
             <div class="stat-label">Reports</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value" style="font-size: 3rem;">{% if user.is_main_admin %}OWNER{% else %}STAFF{% endif %}</div>
+            <div class="stat-value" style="font-size: 2.2rem; padding-top: 1rem;">{% if user.is_main_admin %}OWNER{% else %}STAFF{% endif %}</div>
             <div class="stat-label">Access</div>
         </div>
     </div>
@@ -36,32 +36,32 @@
         <div class="glass-card">
             <h3>Donations</h3>
             <p>Keep track of all the kindness in your community with our easy donation tools.</p>
-            <div style="background: #000; color: #00ff00; padding: 0.8rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 10px;">ONLINE</div>
-            <a href="{% url 'bot_detail' 'donations' %}" class="btn btn-secondary" style="width: 100%;">Configure</a>
+            <div style="background: #1a1a1a; color: #fbbf24; padding: 0.6rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 50px;">ONLINE</div>
+            <a href="{% url 'bot_detail' 'donations' %}" class="btn" style="width: 100%;">Configure</a>
         </div>
 
         <!-- Giveaway -->
         <div class="glass-card">
             <h3>Giveaways</h3>
             <p>Spread the joy! Create and manage fun giveaways for your members to win prizes.</p>
-            <div style="background: #000; color: #00ff00; padding: 0.8rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 10px;">ONLINE</div>
-            <a href="{% url 'bot_detail' 'giveaway' %}" class="btn btn-secondary" style="width: 100%;">Configure</a>
+            <div style="background: #1a1a1a; color: #fbbf24; padding: 0.6rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 50px;">ONLINE</div>
+            <a href="{% url 'bot_detail' 'giveaway' %}" class="btn" style="width: 100%;">Configure</a>
         </div>
 
         <!-- Reputation -->
         <div class="glass-card">
             <h3>Reputation</h3>
             <p>Celebrate your best members with a reputation system that rewards good vibes.</p>
-            <div style="background: #000; color: #00ff00; padding: 0.8rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 10px;">ONLINE</div>
-            <a href="{% url 'bot_detail' 'reputation' %}" class="btn btn-secondary" style="width: 100%;">Configure</a>
+            <div style="background: #1a1a1a; color: #fbbf24; padding: 0.6rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 50px;">ONLINE</div>
+            <a href="{% url 'bot_detail' 'reputation' %}" class="btn" style="width: 100%;">Configure</a>
         </div>
 
         <!-- Ticket -->
         <div class="glass-card">
             <h3>Support</h3>
             <p>Help is just a click away! Manage support tickets in a friendly and organized way.</p>
-            <div style="background: #000; color: #00ff00; padding: 0.8rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 10px;">ONLINE</div>
-            <a href="{% url 'bot_detail' 'ticket' %}" class="btn btn-secondary" style="width: 100%;">Configure</a>
+            <div style="background: #1a1a1a; color: #fbbf24; padding: 0.6rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 50px;">ONLINE</div>
+            <a href="{% url 'bot_detail' 'ticket' %}" class="btn" style="width: 100%;">Configure</a>
         </div>
     </div>
 </div>

@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700;800&family=Sniglet:wght@400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700;800&family=Sniglet:wght@400;800&family=Bungee&display=swap');
 
 :root {
-    --bg-outer: #ffde59; /* Pop Yellow */
-    --bg-inner: #007bff; /* Vibrant Royal Blue */
-    --accent-pink: #ff57f3; /* Hot Pink */
-    --accent-yellow: #ffde59;
+    --bg-outer: #f97316; /* Burnt Orange */
+    --bg-inner: #fef3c7; /* Warm Cream */
+    --accent-pink: #fda4af; /* Dusty Pink */
+    --accent-yellow: #fbbf24; /* Golden Yellow */
+    --text-dark: #1a1a1a;
     --white: #ffffff;
-    --text-dark: #000000;
-    --comic-shadow: 4px 4px 0px #000;
-    --pop-shadow: 6px 6px 0px #000;
+    --border-thin: 2px solid #1a1a1a;
+    --lozenge-shadow: 4px 4px 0px rgba(0,0,0,0.1);
 }
 
 * {
@@ -20,14 +20,14 @@
 body {
     font-family: 'Fredoka', sans-serif;
     background-color: var(--bg-outer);
-    color: var(--white);
-    line-height: 1.2;
+    color: var(--text-dark);
+    line-height: 1.3;
     overflow-x: hidden;
     min-height: 100vh;
-    padding: 2rem;
+    padding: 3rem;
 }
 
-/* Pop Nav Bar */
+/* Vintage Nav Bar */
 .glass-nav {
     background: transparent;
     padding: 2rem 0;
@@ -36,7 +36,7 @@ body {
 }
 
 .nav-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -46,11 +46,10 @@ body {
 
 .logo {
     text-decoration: none;
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--white);
-    text-transform: uppercase;
-    text-shadow: var(--comic-shadow);
+    font-family: 'Bungee', cursive;
+    font-size: 2rem;
+    color: var(--text-dark);
+    letter-spacing: -1px;
 }
 
 .nav-links {
@@ -63,37 +62,38 @@ body {
     color: var(--text-dark);
     text-decoration: none;
     font-weight: 800;
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-transform: uppercase;
-    transition: transform 0.2s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.nav-links a:hover { transform: scale(1.1); }
-
-.nav-links a.active {
-    color: var(--accent-pink);
-    border-bottom: 5px solid var(--accent-pink);
+.nav-links a:hover {
+    color: var(--bg-outer);
+    transform: scale(1.1) rotate(-2deg);
 }
 
-/* User Menu Pill */
+/* User Menu Lozenge */
 .user-menu {
     display: flex;
     align-items: center;
     gap: 0.8rem;
     background: var(--accent-pink);
-    padding: 0.4rem 1.2rem 0.4rem 0.4rem;
+    padding: 0.5rem 1.5rem 0.5rem 0.5rem;
     border-radius: 50px;
-    border: 3px solid #000;
+    border: var(--border-thin);
     position: relative;
     cursor: pointer;
-    box-shadow: 4px 4px 0px #000;
+    box-shadow: var(--lozenge-shadow);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+.user-menu:hover { transform: translateY(-3px) rotate(1deg); }
+
 .nav-avatar {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    border: 2px solid #000;
+    border: 2px solid var(--text-dark);
 }
 
 .dropdown {
@@ -102,9 +102,10 @@ body {
     right: 0;
     display: none;
     background: var(--white);
-    border: 3px solid #000;
+    border: var(--border-thin);
+    border-radius: 20px;
     min-width: 150px;
-    box-shadow: 8px 8px 0px #000;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.05);
     z-index: 1000;
 }
 
@@ -112,136 +113,138 @@ body {
 
 .dropdown a {
     display: block;
-    padding: 0.8rem 1.2rem;
-    color: #000 !important;
+    padding: 1rem 1.5rem;
+    color: var(--text-dark) !important;
     text-decoration: none;
     font-weight: 800;
 }
 
-/* Pop Buttons */
+.dropdown a:hover { background: var(--bg-inner); }
+
+/* Bouncy Lozenge Buttons */
 .btn {
-    padding: 1.2rem 3rem;
-    border-radius: 50px;
-    border: 3px solid #000;
+    padding: 1rem 3rem;
+    border-radius: 20px;
+    border: var(--border-thin);
     font-family: 'Fredoka', sans-serif;
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: all 0.1s;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--accent-pink);
-    color: var(--white);
-    box-shadow: var(--pop-shadow);
+    background: var(--accent-yellow);
+    color: var(--text-dark);
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.1);
     text-transform: uppercase;
 }
 
 .btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 10px 10px 0px #000;
+    transform: translateY(-5px) scale(1.05) rotate(2deg);
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.15);
+    background: var(--accent-pink);
 }
 
-.btn-secondary { background: var(--bg-inner); }
+.btn:active { transform: translateY(2px) scale(0.95); }
 
 /* Main Content Wrapper */
 .content-wrapper {
     flex: 1;
-    max-width: 1300px;
+    max-width: 1100px;
     margin: 0 auto;
     width: 100%;
-    padding: 5rem;
+    padding: 6rem;
     background: var(--bg-inner);
-    border: 6px solid #000;
-    position: relative;
-    min-height: 80vh;
+    border: var(--border-thin);
+    border-radius: 40px;
+    box-shadow: 0 30px 0px rgba(0,0,0,0.05);
 }
 
-/* Pop Typography */
+/* Vintage Typography */
 h1 {
-    font-size: clamp(3rem, 10vw, 7rem);
-    font-weight: 800;
-    color: var(--accent-yellow);
+    font-family: 'Bungee', cursive;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 400;
+    color: var(--text-dark);
     text-transform: uppercase;
-    line-height: 0.9;
+    line-height: 1;
+    margin-bottom: 2.5rem;
     letter-spacing: -2px;
-    -webkit-text-stroke: 3px #000;
-    text-shadow: 8px 8px 0px #000, 12px 12px 0px #fff;
-    margin-bottom: 3rem;
 }
 
 h2 {
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--white);
-    text-transform: uppercase;
-    -webkit-text-stroke: 2px #000;
-    text-shadow: 5px 5px 0px #000;
-    margin-bottom: 2rem;
+    font-family: 'Bungee', cursive;
+    font-size: 2.2rem;
+    color: var(--text-dark);
+    margin-bottom: 3rem;
 }
 
-/* Stats Section */
+/* Stats Sections */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 6rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 5rem;
 }
 
 .stat-card {
-    background: var(--accent-pink);
-    padding: 3rem;
-    border: 4px solid #000;
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 30px;
+    border: var(--border-thin);
     text-align: center;
-    box-shadow: var(--pop-shadow);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.stat-card:nth-child(even) { background: var(--accent-yellow); color: #000; }
+.stat-card:hover { transform: translateY(-10px) rotate(-3deg); background: var(--accent-pink); }
+.stat-card:nth-child(even):hover { transform: translateY(-10px) rotate(3deg); background: var(--accent-yellow); }
 
-.stat-value { font-size: 5rem; font-weight: 800; line-height: 1; margin-bottom: 0.5rem; }
-.stat-label { font-weight: 800; text-transform: uppercase; font-size: 1.1rem; }
+.stat-value { font-size: 4rem; font-weight: 800; color: var(--text-dark); line-height: 1; margin-bottom: 0.5rem; }
+.stat-label { font-weight: 800; text-transform: uppercase; font-size: 1rem; opacity: 0.7; }
 
 /* Grid Cards */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 4rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem;
 }
 
 .glass-card {
     background: var(--white);
-    border: 4px solid #000;
+    border: var(--border-thin);
     padding: 3rem;
-    box-shadow: 12px 12px 0px #000;
-    color: #000;
+    border-radius: 40px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+.glass-card:hover { transform: scale(1.03) rotate(1deg); box-shadow: 15px 15px 0px rgba(0,0,0,0.03); }
+
 .glass-card h3 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    text-transform: uppercase;
+    font-family: 'Bungee', cursive;
+    font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    color: var(--bg-inner);
-    -webkit-text-stroke: 1px #000;
+    color: var(--bg-outer);
 }
 
 .glass-card p {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.1rem;
+    font-weight: 500;
     margin-bottom: 2.5rem;
+    opacity: 0.8;
 }
 
 /* Footer */
 .glass-footer {
     text-align: center;
     padding: 5rem;
-    color: var(--text-dark);
-    font-weight: 800;
+    color: var(--white);
+    font-family: 'Bungee', cursive;
     font-size: 1.5rem;
-    text-transform: uppercase;
+    opacity: 0.9;
 }
 
 /* Animations */
-.animate-fade { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-@keyframes popIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+.animate-fade { animation: vintageSlide 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+@keyframes vintageSlide { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
