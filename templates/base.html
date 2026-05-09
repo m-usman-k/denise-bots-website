@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +33,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <a href="{% url 'account_login' %}" class="btn-discord"><i class="fab fa-discord"></i> Login with Discord</a>
+                    <a href="{% provider_login_url 'discord' %}" class="btn-discord"><i class="fab fa-discord"></i> Login with Discord</a>
                 {% endif %}
             </div>
         </div>
