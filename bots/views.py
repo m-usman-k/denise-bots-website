@@ -1,16 +1,26 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-import os
+from django.conf import settings
 from .models import Bot
 from pymongo import MongoClient
 
 def get_mongo_db():
-    uri = os.environ.get('MONGO_URI', 'mongodb://localhost:27017/')
-    db_name = os.environ.get('MONGO_DB_NAME', 'denise_bots')
-    auth_source = os.environ.get('MONGO_AUTH_SOURCE', 'admin')
+    db_config = settings.DATABASES['default']
     
-    # We pass authSource explicitly to be 100% sure PyMongo knows where to auth
-    client = MongoClient(uri, authSource=auth_source)
+    # Build the URI from the structured settings
+    user = db_config.get('USER')
+    password = db_config.get('PASSWORD')
+    host = db_config.get('HOST', 'localhost')
+    port = db_config.get('PORT', 27017)
+    db_name = db_config.get('NAME', 'denise_bots')
+    auth_source = db_config.get('CLIENT', {}).get('authSource', 'admin')
+    
+    if user and password:
+        uri = f"mongodb://{user}:{password}@{host}:{port}/?authSource={auth_source}"
+    else:
+        uri = f"mongodb://{host}:{port}/"
+        
+    client = MongoClient(uri)
     return client[db_name]
 
 @login_required
