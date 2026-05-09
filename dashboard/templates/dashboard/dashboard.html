@@ -1,112 +1,151 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard - Denise Bots{% endblock %}
+{% block title %}Dashboard — Denise Bots{% endblock %}
 
 {% block content %}
-<div class="animate-fade">
-    <div class="dashboard-header">
-        <h1><i data-lucide="sparkles" style="width: 28px; height: 28px; color: #fde047;"></i> Main Control Center</h1>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; padding-left: 2.8rem;">Managing your whimsical bot family.</p>
-    </div>
 
-    <div class="dashed-line"></div>
-
-    <!-- Stats -->
-    <div class="stats-grid">
-        <div class="stat-card" style="background: var(--accent-purple);">
-            <div class="stat-icon"><i data-lucide="bot" style="color: #a855f7;"></i></div>
-            <div class="stat-content">
-                <div class="stat-value">{{ active_bots }}</div>
-                <div class="stat-label">Active Bots</div>
-            </div>
-        </div>
-        <div class="stat-card" style="background: var(--accent-pink);">
-            <div class="stat-icon"><i data-lucide="users" style="color: #ec4899;"></i></div>
-            <div class="stat-content">
-                <div class="stat-value">{{ user_count }}</div>
-                <div class="stat-label">Members</div>
-            </div>
-        </div>
-        <div class="stat-card" style="background: var(--accent-purple);">
-            <div class="stat-icon"><i data-lucide="file-text" style="color: #a855f7;"></i></div>
-            <div class="stat-content">
-                <div class="stat-value">0</div>
-                <div class="stat-label">Reports</div>
-            </div>
-        </div>
-        <div class="stat-card" style="background: var(--accent-blue);">
-            <div class="stat-icon"><i data-lucide="crown" style="color: #3b82f6;"></i></div>
-            <div class="stat-content">
-                <div class="stat-value" style="font-size: 1.4rem;">{% if user.is_main_admin %}Owner{% else %}Staff{% endif %}</div>
-                <div class="stat-label">Access</div>
-            </div>
-        </div>
-    </div>
-
-    <h2 style="font-size: 1rem; font-weight: 700; margin-bottom: 2rem; color: #94a3b8; display: flex; align-items: center; gap: 0.6rem;">
-        <i data-lucide="cloud" style="width: 20px; height: 20px;"></i> Your Bot Collection
-    </h2>
-    
-    <div class="grid">
-        <!-- Donations -->
-        <div class="glass-card">
-            <div class="card-top">
-                <div class="bot-icon-circle" style="background: #eff6ff;">
-                    <i data-lucide="heart" style="color: #3b82f6; width: 28px; height: 28px;"></i>
-                </div>
-                <div class="card-info">
-                    <h3>Donations</h3>
-                    <p>Keep track of all the kindness in your community with our easy tools.</p>
-                </div>
-            </div>
-            <div class="status-indicator"><div class="status-dot"></div> Active</div>
-            <a href="{% url 'bot_detail' 'donations' %}" class="btn">Manage <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></a>
-        </div>
-
-        <!-- Giveaway -->
-        <div class="glass-card">
-            <div class="card-top">
-                <div class="bot-icon-circle" style="background: #fdf2f8;">
-                    <i data-lucide="gift" style="color: #ec4899; width: 28px; height: 28px;"></i>
-                </div>
-                <div class="card-info">
-                    <h3>Giveaways</h3>
-                    <p>Spread the joy! Create and manage fun giveaways for your members.</p>
-                </div>
-            </div>
-            <div class="status-indicator"><div class="status-dot"></div> Active</div>
-            <a href="{% url 'bot_detail' 'giveaway' %}" class="btn">Manage <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></a>
-        </div>
-
-        <!-- Reputation -->
-        <div class="glass-card">
-            <div class="card-top">
-                <div class="bot-icon-circle" style="background: #f5f3ff;">
-                    <i data-lucide="star" style="color: #a855f7; width: 28px; height: 28px;"></i>
-                </div>
-                <div class="card-info">
-                    <h3>Reputation</h3>
-                    <p>Celebrate your best members with a reputation system that rewards good vibes.</p>
-                </div>
-            </div>
-            <div class="status-indicator"><div class="status-dot"></div> Active</div>
-            <a href="{% url 'bot_detail' 'reputation' %}" class="btn">Manage <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></a>
-        </div>
-
-        <!-- Ticket -->
-        <div class="glass-card">
-            <div class="card-top">
-                <div class="bot-icon-circle" style="background: #eff6ff;">
-                    <i data-lucide="headset" style="color: #3b82f6; width: 28px; height: 28px;"></i>
-                </div>
-                <div class="card-info">
-                    <h3>Support</h3>
-                    <p>Help is just a click away! Manage support tickets in a friendly way.</p>
-                </div>
-            </div>
-            <div class="status-indicator"><div class="status-dot"></div> Active</div>
-            <a href="{% url 'bot_detail' 'ticket' %}" class="btn">Manage <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></a>
-        </div>
-    </div>
+<!-- ── Page Title ── -->
+<div class="panel-title">
+    <i class="ph ph-sparkle" style="font-size:1.4rem; color:#F5C84A;"></i>
+    Main Control Center
 </div>
+<p class="panel-subtitle">Managing your whimsical bot family.</p>
+<hr class="panel-divider">
+
+<!-- ══════════════════════════════════
+     STAT CARDS
+══════════════════════════════════ -->
+<div class="stats-grid" style="margin-bottom:2rem;">
+
+    <!-- Active Bots -->
+    <div class="stat-card stat-card-white">
+        <div class="stat-icon-wrap">
+            <i class="ph ph-robot" style="font-size:1.25rem;"></i>
+        </div>
+        <div class="stat-value">{{ active_bots }}</div>
+        <div class="stat-label">Active Bots</div>
+    </div>
+
+    <!-- Members -->
+    <div class="stat-card stat-card-pink">
+        <div class="stat-icon-wrap">
+            <i class="ph ph-users-three" style="font-size:1.25rem;"></i>
+        </div>
+        <div class="stat-value">{{ user_count }}</div>
+        <div class="stat-label">Members</div>
+    </div>
+
+    <!-- Reports -->
+    <div class="stat-card stat-card-lavender">
+        <div class="stat-icon-wrap">
+            <i class="ph ph-file-text" style="font-size:1.25rem;"></i>
+        </div>
+        <div class="stat-value">0</div>
+        <div class="stat-label">Reports</div>
+    </div>
+
+    <!-- Role / Access -->
+    <div class="stat-card stat-card-bluegray">
+        <div class="stat-icon-wrap">
+            <i class="ph ph-crown" style="font-size:1.25rem;"></i>
+        </div>
+        <div class="stat-value" style="font-size:1.35rem;">
+            {% if user.is_main_admin %}Owner{% else %}Staff{% endif %}
+        </div>
+        <div class="stat-label">Access</div>
+    </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     BOT COLLECTION HEADING
+══════════════════════════════════ -->
+<div class="section-heading">
+    <i class="ph ph-cloud" style="font-size:1.1rem;"></i>
+    Your Bot Collection
+</div>
+
+<!-- ══════════════════════════════════
+     FEATURE CARDS
+══════════════════════════════════ -->
+<div class="cards-grid">
+
+    <!-- Donations -->
+    <div class="feature-card">
+        <div class="card-icon-wrap card-icon-purple">
+            <i class="ph ph-heart" style="font-size:1.5rem;"></i>
+        </div>
+        <div class="card-sparkle-dots">
+            <span></span><span></span>
+        </div>
+        <div class="card-title">Donations</div>
+        <p class="card-desc">Keep track of all the kindness in your community with our easy donation tools.</p>
+        <div class="status-badge status-badge-active">
+            <span class="status-dot status-dot-active"></span> Active
+        </div>
+        <a href="{% url 'bot_detail' 'donations' %}" class="btn-manage">
+            Manage
+            <span class="btn-manage-arrow">›</span>
+        </a>
+    </div>
+
+    <!-- Giveaways -->
+    <div class="feature-card">
+        <div class="card-icon-wrap card-icon-pink">
+            <i class="ph ph-gift" style="font-size:1.5rem;"></i>
+        </div>
+        <div class="card-sparkle-dots">
+            <span></span><span></span>
+        </div>
+        <div class="card-title">Giveaways</div>
+        <p class="card-desc">Spread the joy! Create and manage fun giveaways for your members to win prizes.</p>
+        <div class="status-badge status-badge-active">
+            <span class="status-dot status-dot-active"></span> Active
+        </div>
+        <a href="{% url 'bot_detail' 'giveaway' %}" class="btn-manage">
+            Manage
+            <span class="btn-manage-arrow">›</span>
+        </a>
+    </div>
+
+    <!-- Reputation -->
+    <div class="feature-card">
+        <div class="card-icon-wrap card-icon-purple">
+            <i class="ph ph-star" style="font-size:1.5rem;"></i>
+        </div>
+        <div class="card-sparkle-dots">
+            <span></span><span></span>
+        </div>
+        <div class="card-title">Reputation</div>
+        <p class="card-desc">Celebrate your best members with a reputation system that rewards good vibes.</p>
+        <div class="status-badge status-badge-active">
+            <span class="status-dot status-dot-active"></span> Active
+        </div>
+        <a href="{% url 'bot_detail' 'reputation' %}" class="btn-manage">
+            Manage
+            <span class="btn-manage-arrow">›</span>
+        </a>
+    </div>
+
+    <!-- Support -->
+    <div class="feature-card">
+        <div class="card-icon-wrap card-icon-blue">
+            <i class="ph ph-headset" style="font-size:1.5rem;"></i>
+        </div>
+        <div class="card-sparkle-dots">
+            <span></span><span></span>
+        </div>
+        <div class="card-title">Support</div>
+        <p class="card-desc">Help is just a click away! Manage support tickets in a friendly and organized way.</p>
+        <div class="status-badge status-badge-active">
+            <span class="status-dot status-dot-active"></span> Active
+        </div>
+        <a href="{% url 'bot_detail' 'ticket' %}" class="btn-manage">
+            Manage
+            <span class="btn-manage-arrow">›</span>
+        </a>
+    </div>
+
+</div>
+
 {% endblock %}

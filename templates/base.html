@@ -6,60 +6,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Denise Bots{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Kawaii Cloud Theme -->
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <!-- Phosphor Icons (outline, free CDN) -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <header class="wavy-header">
-        <nav class="nav-container">
-            <a href="{% url 'home' %}" class="logo">
-                <i data-lucide="cloud" style="width: 32px; height: 32px; color: white;"></i>
-                Denise Bots
-                <i data-lucide="sparkle" style="width: 20px; height: 20px; color: #fde047;"></i>
+
+    <!-- ── Decorative background stars ── -->
+    <span class="bg-stars" aria-hidden="true"></span>
+
+    <!-- ══════════════════════════════════
+         NAVBAR
+    ══════════════════════════════════ -->
+    <header class="kawaii-navbar">
+
+        <!-- Logo -->
+        <a href="{% url 'home' %}" class="nav-logo">
+            <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <ellipse cx="14" cy="17" rx="12" ry="7" fill="white" opacity="0.9"/>
+                <ellipse cx="9"  cy="14" rx="5"  ry="5" fill="white" opacity="0.9"/>
+                <ellipse cx="17" cy="13" rx="6"  ry="6" fill="white" opacity="0.9"/>
+                <ellipse cx="14" cy="12" rx="5"  ry="5" fill="white"/>
+            </svg>
+            Denise Bots
+        </a>
+
+        <!-- Right-side links -->
+        <nav class="nav-links-group" aria-label="Main navigation">
+            <a href="{% url 'home' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <i class="ph ph-star" style="font-size:1rem;"></i>
+                <span>Home</span>
             </a>
-            
-            <div class="nav-links">
-                <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-                    <i data-lucide="star" style="width: 18px; height: 18px;"></i> Home
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <i class="ph ph-squares-four" style="font-size:1rem;"></i>
+                    <span>Dashboard</span>
                 </a>
-                
-                {% if user.is_authenticated %}
-                    <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-                        <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i> Dashboard
-                    </a>
-                    <div class="user-menu">
-                        <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar">
-                        <span>{{ user.username }} <i data-lucide="chevron-down" style="width: 14px; height: 14px; display: inline-block;"></i></span>
-                        <div class="dropdown">
-                            <a href="{% url 'account_logout' %}">Sign Out</a>
-                        </div>
+
+                <!-- User pill with hover dropdown -->
+                <div class="nav-user" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar">
+                    <span>{{ user.username }}</span>
+                    <i class="ph ph-caret-down" style="font-size:0.8rem;opacity:0.8;"></i>
+
+                    <div class="nav-dropdown">
+                        <a href="{% url 'account_logout' %}">
+                            <i class="ph ph-sign-out" style="font-size:1rem; vertical-align:middle; margin-right:6px;"></i>Sign Out
+                        </a>
                     </div>
-                {% else %}
-                    <a href="{% provider_login_url 'discord' %}" class="btn btn-discord">Login</a>
-                {% endif %}
-            </div>
+                </div>
+
+            {% else %}
+                <a href="{% provider_login_url 'discord' %}" class="nav-link active">
+                    <i class="ph ph-discord-logo" style="font-size:1rem;"></i>
+                    <span>Login</span>
+                </a>
+            {% endif %}
         </nav>
     </header>
 
-    <main class="content-wrapper">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% block content %}{% endblock %}
-    </main>
+    <!-- ══════════════════════════════════
+         PAGE BACKGROUND WRAPPER
+    ══════════════════════════════════ -->
+    <div class="page-bg">
 
-    <footer class="glass-footer">
-        <p>&copy; 2024 Denise Bots - Magical Adventures Await!</p>
+        <!-- Main cream panel -->
+        <main class="main-panel animate-fade">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="kawaii-footer">
+        <p>&copy; 2024 Denise Bots &nbsp;✦&nbsp; Magical Adventures Await!</p>
     </footer>
 
-    <!-- Initialize Lucide Icons -->
-    <script>
-      lucide.createIcons();
-    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

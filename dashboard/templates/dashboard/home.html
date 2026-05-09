@@ -1,49 +1,67 @@
 {% extends "base.html" %}
 
-{% block title %}Denise Bots - Pro Dreamy Dashboard{% endblock %}
+{% block title %}Denise Bots — Whimsical Bot Dashboard{% endblock %}
 
 {% block content %}
-<section class="hero animate-fade">
-    <div style="background: url('/static/images/bot_character_set.png') no-repeat center; background-size: contain; height: 400px; margin-bottom: 3rem; filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.05)); opacity: 0.9;"></div>
 
-    <h1 style="justify-content: center; font-size: 2.8rem;">THE MOST FUN WAY TO MANAGE BOTS</h1>
-    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 4rem; text-transform: uppercase; letter-spacing: 1px;">A professional universe built for creators who love a touch of magic.</p>
+<div class="hero-section animate-fade">
 
-    <div style="display: flex; justify-content: center; gap: 2rem;">
+    <!-- Character image -->
+    <div class="hero-image-wrap">
+        <img src="/static/images/bot_character_set.png" alt="Cute bot characters" onerror="this.style.display='none'">
+    </div>
+
+    <!-- Headline -->
+    <h1 class="hero-title">The Most Fun Way to Manage Bots</h1>
+    <p class="hero-subtitle">
+        A whimsical kawaii dashboard built for creators who love a touch of magic. Simple, cheerful, and incredibly powerful.
+    </p>
+
+    <!-- CTA -->
+    <div class="hero-cta">
         {% if not user.is_authenticated %}
             {% load socialaccount %}
-            <a href="{% provider_login_url 'discord' %}" class="btn" style="padding: 1.2rem 4rem; font-size: 1.2rem; background: var(--primary); color: white;">
-                GET STARTED
+            <a href="{% provider_login_url 'discord' %}" class="btn btn-primary" style="font-size:1rem; padding:0.75rem 2.5rem;">
+                <i class="ph ph-discord-logo" style="font-size:1.2rem;"></i>
+                Get Started with Discord
             </a>
         {% else %}
-            <a href="{% url 'dashboard' %}" class="btn" style="padding: 1.2rem 4rem; font-size: 1.2rem;">
-                DASHBOARD <i data-lucide="arrow-right" style="width: 20px; height: 20px;"></i>
+            <a href="{% url 'dashboard' %}" class="btn btn-primary" style="font-size:1rem; padding:0.75rem 2.5rem;">
+                <i class="ph ph-squares-four" style="font-size:1.2rem;"></i>
+                Go to Dashboard
             </a>
         {% endif %}
     </div>
-</section>
 
-<section id="features" class="grid animate-fade" style="margin-top: 8rem; gap: 1.5rem;">
-    <div class="glass-card">
-        <div class="bot-icon-circle" style="background: var(--accent-blue); margin-bottom: 1.5rem;">
-            <i data-lucide="shield-check" style="color: #3b82f6;"></i>
+    <!-- Feature highlights -->
+    <div class="hero-features">
+
+        <div class="feature-card" style="text-align:left;">
+            <div class="card-icon-wrap card-icon-blue" style="margin-bottom:0.75rem;">
+                <i class="ph ph-shield-check" style="font-size:1.5rem;"></i>
+            </div>
+            <div class="card-title">Safe &amp; Secure</div>
+            <p class="card-desc">Your data is protected by high-grade security. Only the right people get access.</p>
         </div>
-        <h3 style="font-size: 1.2rem;">SAFE & SOUND</h3>
-        <p>Your data is protected by professional security, ensuring only you have access.</p>
-    </div>
-    <div class="glass-card">
-        <div class="bot-icon-circle" style="background: var(--accent-pink); margin-bottom: 1.5rem;">
-            <i data-lucide="git-branch" style="color: #ec4899;"></i>
+
+        <div class="feature-card" style="text-align:left;">
+            <div class="card-icon-wrap card-icon-purple" style="margin-bottom:0.75rem;">
+                <i class="ph ph-database" style="font-size:1.5rem;"></i>
+            </div>
+            <div class="card-title">Magic Database</div>
+            <p class="card-desc">Everything stored in a centralized hub — sync across all your servers instantly.</p>
         </div>
-        <h3 style="font-size: 1.2rem;">MAGIC HUB</h3>
-        <p>Everything is stored in a centralized cluster, making syncing a breeze across servers.</p>
-    </div>
-    <div class="glass-card">
-        <div class="bot-icon-circle" style="background: var(--accent-purple); margin-bottom: 1.5rem;">
-            <i data-lucide="bar-chart-3" style="color: #a855f7;"></i>
+
+        <div class="feature-card" style="text-align:left;">
+            <div class="card-icon-wrap card-icon-pink" style="margin-bottom:0.75rem;">
+                <i class="ph ph-chart-line-up" style="font-size:1.5rem;"></i>
+            </div>
+            <div class="card-title">Live Stats</div>
+            <p class="card-desc">Watch your community grow in real-time with beautiful charts and data.</p>
         </div>
-        <h3 style="font-size: 1.2rem;">LIVE DATA</h3>
-        <p>Watch your community grow in real-time with professional tables and stats.</p>
+
     </div>
-</section>
+
+</div>
+
 {% endblock %}
