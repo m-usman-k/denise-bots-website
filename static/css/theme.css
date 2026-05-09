@@ -490,10 +490,8 @@ body::before {
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
 }
 
-.feature-card:nth-child(odd)  { transform: rotate(-1deg); }
-.feature-card:nth-child(even) { transform: rotate(1deg); }
 .feature-card:hover { 
-  transform: rotate(0deg) translateY(-6px) !important; 
+  transform: translateY(-6px) !important; 
   box-shadow: 0 12px 24px rgba(139,128,216,0.15);
 }
 
