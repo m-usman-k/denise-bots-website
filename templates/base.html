@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Denise Bots{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     {% block extra_head %}{% endblock %}
 </head>
@@ -14,7 +14,7 @@
     <nav class="glass-nav">
         <div class="nav-container">
             <a href="{% url 'home' %}" class="logo">
-                <span class="logo-text">DENISE</span><span class="logo-accent">BOTS</span>
+                Denise<span class="logo-accent"> Bots</span>
             </a>
             <div class="nav-links">
                 <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
@@ -25,13 +25,15 @@
                     {% endif %}
                     <div class="user-menu">
                         <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar">
-                        <span style="font-size: 0.88rem; color: var(--text-secondary);">{{ user.username }}</span>
+                        <span style="font-size: 0.85rem; font-weight: 500; color: var(--text-sub);">{{ user.username }}</span>
                         <div class="dropdown">
-                            <a href="{% url 'account_logout' %}"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                            <a href="{% url 'account_logout' %}"><i class="fas fa-sign-out-alt"></i> &nbsp;Sign Out</a>
                         </div>
                     </div>
                 {% else %}
-                    <a href="{% provider_login_url 'discord' %}" class="btn btn-primary"><i class="fab fa-discord"></i> Sign In</a>
+                    <a href="{% provider_login_url 'discord' %}" class="btn btn-primary">
+                        <i class="fab fa-discord"></i> Sign In
+                    </a>
                 {% endif %}
             </div>
         </div>
@@ -47,7 +49,7 @@
     </main>
 
     <footer class="glass-footer">
-        <p>© 2026 Denise Bots — Built with <i class="fas fa-heart"></i> for the community.</p>
+        <p>Made with <i class="fas fa-heart"></i> for Discord communities &mdash; Denise Bots &copy; 2026</p>
     </footer>
 
     <script src="{% static 'js/main.js' %}"></script>

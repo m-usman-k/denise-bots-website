@@ -1,39 +1,58 @@
 {% extends "base.html" %}
 
-{% block title %}Denise Bots — Discord Bot Management{% endblock %}
+{% block title %}Denise Bots — Discord Bot Dashboard{% endblock %}
 
 {% block content %}
-<section class="hero animate-fade">
-    <h1>Powering Communities with <span class="accent">Denise Bots</span></h1>
-    <p>A unified dashboard to manage, monitor, and scale your Discord bots. Secure, efficient, and built for modern server administrators.</p>
+<section class="hero animate-fade" style="position: relative;">
+    <!-- Floating Emojis -->
+    <span class="hero-emoji">🤖</span>
+    <span class="hero-emoji">⚡</span>
+    <span class="hero-emoji">🎉</span>
+    <span class="hero-emoji">🚀</span>
+
+    <div class="hero-badge">
+        <i class="fas fa-bolt"></i> Now with MongoDB Power
+    </div>
+
+    <h1>
+        Manage your<br>
+        Discord bots with<br>
+        <span class="grad">pure fun.</span>
+    </h1>
+
+    <p>One dashboard. All your bots. Real-time data, beautiful UI, and zero headaches.</p>
+
     <div class="hero-btns">
         {% if not user.is_authenticated %}
             {% load socialaccount %}
             <a href="{% provider_login_url 'discord' %}" class="btn btn-primary btn-large">
-                <i class="fab fa-discord"></i> Get Started
+                <i class="fab fa-discord"></i> Sign in with Discord
             </a>
-            <a href="#features" class="btn btn-secondary btn-large">Learn More</a>
+            <a href="#features" class="btn btn-secondary btn-large">See Features</a>
         {% else %}
-            <a href="{% url 'dashboard' %}" class="btn btn-primary btn-large">Open Dashboard</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-primary btn-large">
+                <i class="fas fa-rocket"></i> Open Dashboard
+            </a>
         {% endif %}
     </div>
 </section>
 
-<section id="features" class="grid animate-fade">
+<!-- Feature Cards -->
+<section id="features" class="grid animate-fade" style="margin-top: 1rem;">
     <div class="glass-card">
-        <div class="bot-icon"><i class="fas fa-shield-halved"></i></div>
-        <h3>Secure OAuth2 Login</h3>
-        <p>Discord OAuth2 integration ensures only authorized administrators can access your bot configuration and sensitive data.</p>
+        <div class="bot-icon" style="color: var(--violet); margin-bottom: 1rem;"><i class="fas fa-shield-halved"></i></div>
+        <h3>Secure by Default</h3>
+        <p>Discord OAuth2 — only verified admins get through. No passwords, no worries.</p>
     </div>
     <div class="glass-card">
-        <div class="bot-icon"><i class="fas fa-database"></i></div>
-        <h3>Centralized MongoDB</h3>
-        <p>All bot modules share a unified MongoDB cluster for real-time data synchronization and high-availability storage.</p>
+        <div class="bot-icon" style="color: var(--cyan); margin-bottom: 1rem;"><i class="fas fa-database"></i></div>
+        <h3>MongoDB Backbone</h3>
+        <p>All bots share one fast, centralized database. Data flows in real time.</p>
     </div>
     <div class="glass-card">
-        <div class="bot-icon"><i class="fas fa-chart-line"></i></div>
-        <h3>Real-time Analytics</h3>
-        <p>Monitor donation leaderboards, active tickets, giveaway entries, and user reputation scores at a glance.</p>
+        <div class="bot-icon" style="color: var(--amber); margin-bottom: 1rem;"><i class="fas fa-chart-bar"></i></div>
+        <h3>Live Insights</h3>
+        <p>Donations, tickets, rep scores — your whole ecosystem at a glance.</p>
     </div>
 </section>
 {% endblock %}
