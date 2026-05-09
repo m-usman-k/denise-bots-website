@@ -160,8 +160,8 @@ body::before {
   font-family: var(--font);
   font-weight: 700;
   font-size: 1.15rem;
-  padding: 0.6rem 1.4rem;
-  border-radius: 24px;
+  padding: 0.55rem 1.3rem;
+  border-radius: 8px;
   transition: background 0.18s, color 0.18s;
   white-space: nowrap;
   line-height: 1;
@@ -177,6 +177,7 @@ body::before {
 .nav-link.active {
   background: var(--text-white);
   color: var(--text-heading);
+  border-radius: 8px;
 }
 
 /* User pill */
@@ -259,12 +260,14 @@ body::before {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.7rem 1rem;
+  padding: 0.65rem 1rem;
+  margin: 0 6px 4px;
   text-decoration: none;
   color: var(--text-body);
   font-family: var(--font);
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
   transition: background 0.15s;
 }
 .nav-dropdown a:hover { background: var(--bg-card-lavender); }
@@ -644,17 +647,16 @@ input:focus, select:focus, textarea:focus {
 .alert.error   { background: #F5C8C8; color: #901818; border-left: 3px solid #E87070; }
 .alert.info    { background: #E0EAFF; color: #2040A0; border-left: 3px solid #6B8FD4; }
 
-/* ══════════════════════════════════════════════
-   FOOTER
-══════════════════════════════════════════════ */
+/* ── FOOTER ──────────────────────────────────── */
 .kawaii-footer {
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 1.5rem;
+  padding: 2rem 1rem;
   font-family: var(--font);
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.7);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1A1A2E;
 }
 
 /* ══════════════════════════════════════════════

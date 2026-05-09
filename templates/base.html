@@ -23,12 +23,10 @@
     <header class="kawaii-navbar">
         <div class="nav-inner">
             <!-- Logo -->
+            <!-- Better cloud SVG logo -->
             <a href="{% url 'home' %}" class="nav-logo">
-                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <ellipse cx="14" cy="17" rx="12" ry="7" fill="white" opacity="0.9"/>
-                    <ellipse cx="9"  cy="14" rx="5"  ry="5" fill="white" opacity="0.9"/>
-                    <ellipse cx="17" cy="13" rx="6"  ry="6" fill="white" opacity="0.9"/>
-                    <ellipse cx="14" cy="12" rx="5"  ry="5" fill="white"/>
+                <svg viewBox="0 0 36 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:36px;height:26px;">
+                    <path d="M29 18H8a7 7 0 1 1 6.47-9.67A6 6 0 1 1 29 18z" fill="white" opacity="0.95"/>
                 </svg>
                 Denise Bots
             </a>
@@ -37,27 +35,25 @@
             <nav class="nav-links-group" aria-label="Main navigation">
                 <a href="{% url 'home' %}"
                    class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-                    <i class="ph ph-star" style="font-size:1rem;"></i>
+                    <i class="ph ph-house"></i>
                     <span>Home</span>
                 </a>
 
                 {% if user.is_authenticated %}
                     <a href="{% url 'dashboard' %}"
                        class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-                        <i class="ph ph-squares-four" style="font-size:1rem;"></i>
+                        <i class="ph ph-squares-four"></i>
                         <span>Dashboard</span>
                     </a>
 
-                    <!-- User pill with hover dropdown -->
+                    <!-- Avatar-only pill with hover dropdown -->
                     <div class="nav-user" tabindex="0">
                         <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <span class="nav-avatar-fallback">{{ user.username|first|upper }}</span>
-                        <span>{{ user.username }}</span>
-                        <i class="ph ph-caret-down" style="font-size:0.8rem;opacity:0.8;"></i>
                         <div class="nav-dropdown">
                             <a href="{% url 'account_logout' %}">
-                                <i class="ph ph-sign-out" style="font-size:1rem; vertical-align:middle; margin-right:6px;"></i>Sign Out
+                                <i class="ph ph-sign-out"></i> Sign Out
                             </a>
                         </div>
                     </div>
