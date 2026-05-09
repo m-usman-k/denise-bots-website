@@ -1,9 +1,10 @@
-Django>=4.2
+Django>=5.1
 django-environ
-django-allauth
+django-allauth[socialaccount]
 requests
 whitenoise
 gunicorn
 pymongo
 dnspython
 python-dotenv
+django-mongodb-backend

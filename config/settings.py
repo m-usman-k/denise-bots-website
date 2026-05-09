@@ -20,6 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, []),
+    MONGO_URI=(str, 'mongodb://localhost:27017/'),
+    MONGO_DB_NAME=(str, 'denise_bots'),
 )
 # Read .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -45,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
 
     # Third-party apps
     'allauth',
@@ -58,8 +59,6 @@ INSTALLED_APPS = [
     'dashboard',
     'bots',
 ]
-
-SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -99,8 +98,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django_mongodb_backend',
+        'NAME': env('MONGO_DB_NAME'),
+        'CLIENT': {
+            'host': env('MONGO_URI'),
+        },
     }
 }
 
@@ -158,7 +160,7 @@ WHITENOISE_USE_FINDERS = True
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django_mongodb_backend.fields.ObjectIdAutoField'
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.CustomUser'
@@ -178,7 +180,17 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_PROVIDERS = {
     'discord': {
         'SCOPE': ['identify', 'email', 'guilds'],
+        'APPS': [
+            {
+                'client_id': env('DISCORD_CLIENT_ID', default=''),
+                'secret': env('DISCORD_CLIENT_SECRET', default=''),
+                'key': '',
+            }
+        ],
     }
 }
 
 SOCIALACCOUNT_ADAPTER = 'accounts.adapter.DiscordAdapter'
+
+# Store tokens in MongoDB
+SOCIALACCOUNT_STORE_TOKENS = True
