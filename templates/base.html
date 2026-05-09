@@ -6,34 +6,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Denise Bots{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=3.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=4.0">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
     <nav class="glass-nav">
         <div class="nav-container">
             <a href="{% url 'home' %}" class="logo">
-                Denise<span class="logo-accent"> Bots</span>
+                Denise Bots
             </a>
             <div class="nav-links">
                 <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
-                    {% if user.is_main_admin %}
-                        <a href="{% url 'manage_admins' %}" class="{% if request.resolver_match.url_name == 'manage_admins' %}active{% endif %}">Admins</a>
-                    {% endif %}
                     <div class="user-menu">
                         <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar">
-                        <span style="font-size: 0.85rem; font-weight: 500; color: var(--text-sub);">{{ user.username }}</span>
+                        <span style="font-weight: 800; color: white;">{{ user.username }}</span>
                         <div class="dropdown">
-                            <a href="{% url 'account_logout' %}"><i class="fas fa-sign-out-alt"></i> &nbsp;Sign Out</a>
+                            <a href="{% url 'account_logout' %}">Sign Out</a>
                         </div>
                     </div>
                 {% else %}
-                    <a href="{% provider_login_url 'discord' %}" class="btn btn-primary">
-                        <i class="fab fa-discord"></i> Sign In
-                    </a>
+                    <a href="{% provider_login_url 'discord' %}" class="btn btn-discord">Login</a>
                 {% endif %}
             </div>
         </div>
@@ -49,10 +43,9 @@
     </main>
 
     <footer class="glass-footer">
-        <p>Made with <i class="fas fa-heart"></i> for Discord communities &mdash; Denise Bots &copy; 2026</p>
+        <p>Built for the community - Denise Bots 2026</p>
     </footer>
 
-    <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

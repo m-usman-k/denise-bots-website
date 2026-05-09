@@ -1,65 +1,58 @@
 {% extends "base.html" %}
 
-{% block title %}{{ bot_name|capfirst }} — Denise Bots{% endblock %}
+{% block title %}{{ bot_name|capfirst }} - Denise Bots{% endblock %}
 
 {% block content %}
 <div class="animate-fade">
-    <!-- Breadcrumbs -->
-    <div class="breadcrumbs">
-        <a href="{% url 'dashboard' %}">Dashboard</a>
-        <span class="sep">/</span>
-        <span class="current">{{ bot_name|capfirst }}</span>
+    <div style="margin-bottom: 2rem;">
+        <a href="{% url 'dashboard' %}" class="btn">Go Back</a>
     </div>
 
-    <!-- Header -->
     <div class="dashboard-header">
         <div>
-            <h1>{{ bot_name|capfirst }} <span class="grad">Dashboard</span></h1>
-            <p style="color: var(--text-sub); margin-top: 0.5rem;">Live data and configuration for the {{ bot_name }} module.</p>
+            <h1>{{ bot_name|capfirst }} Details</h1>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">Managing your {{ bot_name }} collection.</p>
         </div>
-        <a href="{% url 'dashboard' %}" class="btn btn-ghost" title="Close">
-            <i class="fas fa-times"></i>
-        </a>
     </div>
 
-    <div class="grid" style="grid-template-columns: 1fr 320px; align-items: start;">
+    <div class="grid">
         <!-- Data Table -->
-        <div class="glass-card">
-            <h3 style="margin-bottom: 0.5rem;">Live Data Stream</h3>
-            <p style="margin-bottom: 1.5rem;">Records fetched directly from the MongoDB cluster.</p>
+        <div class="glass-card" style="grid-column: 1 / -1;">
+            <h3>Active Records</h3>
+            <p style="margin-bottom: 1.5rem;">Everything we found in the collection.</p>
+            
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Payload</th>
+                            <th>Identifier</th>
+                            <th>Details</th>
                             <th style="width: 100px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for item in data %}
                         <tr>
-                            <td style="font-family: monospace; font-size: 0.85rem;">{{ item.id|default:item.guid|default:item.user_id|default:"—" }}</td>
+                            <td style="font-family: 'Sniglet', cursive; font-weight: 800;">{{ item.id|default:item.guid|default:item.user_id|default:"-" }}</td>
                             <td>
                                 {% if bot_name == 'giveaway' %}
-                                    <span style="color:var(--text-muted)">Prize:</span> {{ item.prize }} &nbsp;&nbsp;|&nbsp;&nbsp; <span style="color:var(--text-muted)">Winners:</span> {{ item.winners }}
+                                    Prize: {{ item.prize }} | Winners: {{ item.winners }}
                                 {% elif bot_name == 'reputation' %}
-                                    <span style="color:var(--text-muted)">User:</span> {{ item.user_id }} &nbsp;&nbsp;|&nbsp;&nbsp; <span style="color:var(--text-muted)">Score:</span> {{ item.points }}
+                                    Member: {{ item.user_id }} | Points: {{ item.points }}
                                 {% elif bot_name == 'ticket' %}
-                                    <span style="color:var(--text-muted)">Ticket #</span>{{ item.id }} &nbsp;&nbsp;|&nbsp;&nbsp; <span style="color:var(--text-muted)">Status:</span> {{ item.status }}
+                                    Ticket #{{ item.id }} | Status: {{ item.status }}
                                 {% else %}
                                     {{ item }}
                                 {% endif %}
                             </td>
                             <td>
-                                <button class="btn btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.8rem;">Edit</button>
+                                <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Change</button>
                             </td>
                         </tr>
                         {% empty %}
                         <tr>
                             <td colspan="3" style="padding: 4rem; text-align: center; color: var(--text-muted);">
-                                <i class="fas fa-box-open" style="font-size: 2.5rem; display: block; margin-bottom: 1.5rem; opacity: 0.3;"></i>
-                                No records found in this collection yet.
+                                Nothing found here yet!
                             </td>
                         </tr>
                         {% endfor %}
@@ -69,26 +62,20 @@
         </div>
 
         <!-- Settings Panel -->
-        <div class="glass-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
-            <div>
-                <h3 style="margin-bottom: 0.5rem;">Module Settings</h3>
-                <p>Configure runtime behavior for this bot.</p>
-            </div>
-
+        <div class="glass-card">
+            <h3>Quick Settings</h3>
+            <p style="margin-bottom: 1.5rem;">Toggle how this bot behaves.</p>
             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 0.95rem; font-weight: 500;">Enable Module</span>
-                    <input type="checkbox" checked style="accent-color: var(--violet); transform: scale(1.4);">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--secondary); padding-bottom: 1rem;">
+                    <span style="font-weight: 800;">Module Enabled</span>
+                    <input type="checkbox" checked style="transform: scale(1.5);">
                 </div>
-                <div style="border-top: 1px solid var(--border);"></div>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 0.95rem; font-weight: 500;">Log Events</span>
-                    <input type="checkbox" checked style="accent-color: var(--violet); transform: scale(1.4);">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--secondary); padding-bottom: 1rem;">
+                    <span style="font-weight: 800;">Log Everything</span>
+                    <input type="checkbox" checked style="transform: scale(1.5);">
                 </div>
-                <div style="border-top: 1px solid var(--border);"></div>
+                <button class="btn btn-primary" style="margin-top: 1rem; align-self: flex-start;">Save Settings</button>
             </div>
-
-            <button class="btn btn-primary" style="width: 100%;">Save Changes</button>
         </div>
     </div>
 </div>
