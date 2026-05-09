@@ -19,13 +19,13 @@
                 <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
-                    <div class="user-menu">
-                        <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar">
-                        <span style="font-weight: 800; color: white;">{{ user.username }}</span>
-                        <div class="dropdown">
-                            <a href="{% url 'account_logout' %}">Sign Out</a>
+                        <div class="user-menu">
+                            <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar">
+                            <span style="font-weight: 800; color: var(--text-dark);">{{ user.username }}</span>
+                            <div class="dropdown">
+                                <a href="{% url 'account_logout' %}">Sign Out</a>
+                            </div>
                         </div>
-                    </div>
                 {% else %}
                     <a href="{% provider_login_url 'discord' %}" class="btn btn-discord">Login</a>
                 {% endif %}

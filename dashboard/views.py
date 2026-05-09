@@ -8,8 +8,6 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 def home(request):
-    if request.user.is_authenticated:
-        return redirect('dashboard')
     return render(request, 'dashboard/home.html')
 
 @login_required
