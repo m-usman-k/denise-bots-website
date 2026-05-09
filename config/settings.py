@@ -22,6 +22,9 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, []),
     MONGO_URI=(str, 'mongodb://localhost:27017/'),
     MONGO_DB_NAME=(str, 'denise_bots'),
+    MONGO_AUTH_SOURCE=(str, 'admin'),
+    DISCORD_CLIENT_ID=(str, ''),
+    DISCORD_CLIENT_SECRET=(str, ''),
 )
 # Read .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -102,8 +105,27 @@ DATABASES = {
         'NAME': env('MONGO_DB_NAME'),
         'CLIENT': {
             'host': env('MONGO_URI'),
+            'authSource': env('MONGO_AUTH_SOURCE'),
         },
     }
+}
+
+# Bypass all app migration files (which hardcode AutoField) and
+# force Django to use syncdb, which respects DEFAULT_AUTO_FIELD.
+MIGRATION_MODULES = {
+    # Django built-in apps
+    'admin': None,
+    'auth': None,
+    'contenttypes': None,
+    'sessions': None,
+    'messages': None,
+    # allauth
+    'account': None,
+    'socialaccount': None,
+    # Local apps
+    'accounts': None,
+    'bots': None,
+    'dashboard': None,
 }
 
 
