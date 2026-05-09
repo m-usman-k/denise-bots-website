@@ -22,6 +22,8 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, []),
     MONGO_URI=(str, 'mongodb://localhost:27017/'),
     MONGO_DB_NAME=(str, 'denise_bots'),
+    MONGO_USER=(str, ''),
+    MONGO_PASS=(str, ''),
     MONGO_AUTH_SOURCE=(str, 'admin'),
     DISCORD_CLIENT_ID=(str, ''),
     DISCORD_CLIENT_SECRET=(str, ''),
@@ -106,6 +108,9 @@ DATABASES = {
         'NAME': env('MONGO_DB_NAME'),
         'CLIENT': {
             'host': env('MONGO_URI'),
+            'username': env('MONGO_USER', default='simpleprog'),
+            'password': env('MONGO_PASS', default='jf83hj032fjkldsa'),
+            'authSource': env('MONGO_AUTH_SOURCE', default='admin'),
         },
     }
 }
