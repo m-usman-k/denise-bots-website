@@ -36,7 +36,7 @@ body {
 /* High-Energy Sticker Navbar */
 .glass-nav {
     background: var(--secondary);
-    padding: 1rem 0;
+    padding: 0.8rem 0;
     border-bottom: 6px solid var(--text-dark);
     box-shadow: 0 10px 0 rgba(30, 27, 75, 0.1);
     position: relative;
@@ -55,10 +55,10 @@ body {
 .logo {
     text-decoration: none;
     font-family: 'Fredoka', sans-serif;
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 800;
     color: var(--white);
-    text-shadow: 4px 4px 0px var(--text-dark);
+    text-shadow: 3px 3px 0px var(--text-dark);
 }
 
 .nav-links {
@@ -72,25 +72,17 @@ body {
     color: var(--text-dark);
     text-decoration: none;
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    padding: 0.6rem 1.2rem;
+    padding: 0.4rem 1rem;
+}
+
+.nav-links a:hover, .nav-links a.active {
     background: var(--white);
     border: 3px solid var(--text-dark);
-    border-radius: 15px;
+    border-radius: 12px;
     box-shadow: 4px 4px 0px var(--text-dark);
     transform: rotate(-1deg);
-}
-
-.nav-links a:hover {
-    transform: scale(1.1) rotate(2deg);
-    box-shadow: 6px 6px 0px var(--text-dark);
-    background: var(--bg-main);
-}
-
-.nav-links a.active {
-    background: var(--primary);
-    color: white;
 }
 
 /* Stickers Buttons */
@@ -217,37 +209,49 @@ body {
     align-items: center;
     gap: 0.8rem;
     background: var(--white);
-    padding: 0.4rem 1.2rem 0.4rem 0.4rem;
+    padding: 0.3rem 1rem 0.3rem 0.3rem;
     border-radius: 50px;
     border: 3px solid var(--text-dark);
     box-shadow: 4px 4px 0px var(--text-dark);
+    position: relative;
+    cursor: pointer;
 }
 
 .nav-avatar {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    border: 3px solid var(--text-dark);
+    border: 2px solid var(--text-dark);
 }
 
 .dropdown {
+    position: absolute;
     top: 130%;
+    right: 0;
+    display: none; /* Fixed: only show on hover */
     border: var(--sketch-border);
-    box-shadow: 10px 10px 0px var(--text-dark);
-    border-radius: 20px;
+    box-shadow: 8px 8px 0px var(--text-dark);
+    border-radius: 15px;
     background: var(--white);
+    min-width: 140px;
+    overflow: hidden;
+}
+
+.user-menu:hover .dropdown {
+    display: block;
 }
 
 .dropdown a {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    transform: none !important;
-    color: var(--text-dark) !important;
+    display: block;
+    padding: 0.8rem 1rem;
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 800;
+    transition: background 0.2s;
 }
 
 .dropdown a:hover {
-    background: var(--bg-main) !important;
+    background: var(--bg-main);
 }
 
 /* Animations */

@@ -6,64 +6,64 @@
 <div class="animate-fade">
     <div class="dashboard-header">
         <div>
-            <h1>Main Control Center</h1>
+            <h1 style="font-family: 'Fredoka', sans-serif; font-weight: 800; color: var(--primary);">Main Control Center</h1>
             <p style="color: var(--text-muted); margin-top: 0.5rem;">Managing your whimsical bot family.</p>
         </div>
     </div>
 
     <!-- Stats -->
     <div class="stats-grid">
-        <div class="stat-card">
+        <div class="stat-card" style="background: var(--accent); border-radius: 20px; transform: none;">
             <div class="stat-value">{{ active_bots }}</div>
             <div class="stat-label">Active Bots</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card" style="background: var(--primary); border-radius: 20px; transform: none;">
             <div class="stat-value">{{ user_count }}</div>
             <div class="stat-label">Members</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card" style="background: var(--accent); border-radius: 20px; transform: none;">
             <div class="stat-value">0</div>
             <div class="stat-label">Reports</div>
         </div>
-        <div class="stat-card">
-            <div class="stat-value">{% if user.is_main_admin %}Owner{% else %}Staff{% endif %}</div>
+        <div class="stat-card" style="background: var(--primary); border-radius: 20px; transform: none;">
+            <div class="stat-value" style="font-size: 1.8rem; padding-top: 0.5rem;">{% if user.is_main_admin %}Owner{% else %}Staff{% endif %}</div>
             <div class="stat-label">Access</div>
         </div>
     </div>
 
-    <h2 style="font-family: 'Fredoka', sans-serif; margin-bottom: 2rem; color: var(--primary);">Your Bot Collection</h2>
+    <h2 style="font-family: 'Fredoka', sans-serif; margin-bottom: 2.5rem; color: var(--primary); font-weight: 800;">Your Bot Collection</h2>
     
     <div class="grid">
         <!-- Donations -->
-        <div class="glass-card">
+        <div class="glass-card" style="border-radius: 25px; transform: none;">
             <h3>Donations</h3>
             <p>Keep track of all the kindness in your community with our easy donation tools.</p>
-            <div class="bot-status">Active</div>
-            <a href="{% url 'bot_detail' 'donations' %}" class="btn btn-primary" style="margin-top: auto; display: block; text-align: center;">Manage</a>
+            <div class="bot-status" style="background: #dcfce7; color: #166534; padding: 0.4rem 1rem; border-radius: 12px; font-weight: 800; display: inline-block; margin-bottom: 1.5rem;">Active</div>
+            <a href="{% url 'bot_detail' 'donations' %}" class="btn btn-primary" style="margin-top: auto; display: block; text-align: center; border-radius: 15px;">Manage</a>
         </div>
 
         <!-- Giveaway -->
-        <div class="glass-card">
+        <div class="glass-card" style="border-radius: 25px; transform: none;">
             <h3>Giveaways</h3>
             <p>Spread the joy! Create and manage fun giveaways for your members to win prizes.</p>
-            <div class="bot-status">Active</div>
-            <a href="{% url 'bot_detail' 'giveaway' %}" class="btn btn-primary" style="margin-top: auto; display: block; text-align: center;">Manage</a>
+            <div class="bot-status" style="background: #dcfce7; color: #166534; padding: 0.4rem 1rem; border-radius: 12px; font-weight: 800; display: inline-block; margin-bottom: 1.5rem;">Active</div>
+            <a href="{% url 'bot_detail' 'giveaway' %}" class="btn btn-primary" style="margin-top: auto; display: block; text-align: center; border-radius: 15px;">Manage</a>
         </div>
 
         <!-- Reputation -->
-        <div class="glass-card">
+        <div class="glass-card" style="border-radius: 25px; transform: none;">
             <h3>Reputation</h3>
             <p>Celebrate your best members with a reputation system that rewards good vibes.</p>
-            <div class="bot-status">Active</div>
-            <a href="{% url 'bot_detail' 'reputation' %}" class="btn btn-primary" style="margin-top: auto; display: block; text-align: center;">Manage</a>
+            <div class="bot-status" style="background: #dcfce7; color: #166534; padding: 0.4rem 1rem; border-radius: 12px; font-weight: 800; display: inline-block; margin-bottom: 1.5rem;">Active</div>
+            <a href="{% url 'bot_detail' 'reputation' %}" class="btn btn-primary" style="margin-top: auto; display: block; text-align: center; border-radius: 15px;">Manage</a>
         </div>
 
         <!-- Ticket -->
-        <div class="glass-card">
+        <div class="glass-card" style="border-radius: 25px; transform: none;">
             <h3>Support</h3>
             <p>Help is just a click away! Manage support tickets in a friendly and organized way.</p>
-            <div class="bot-status">Active</div>
-            <a href="{% url 'bot_detail' 'ticket' %}" class="btn btn-primary" style="margin-top: auto; display: block; text-align: center;">Manage</a>
+            <div class="bot-status" style="background: #dcfce7; color: #166534; padding: 0.4rem 1rem; border-radius: 12px; font-weight: 800; display: inline-block; margin-bottom: 1.5rem;">Active</div>
+            <a href="{% url 'bot_detail' 'ticket' %}" class="btn btn-primary" style="margin-top: auto; display: block; text-align: center; border-radius: 15px;">Manage</a>
         </div>
     </div>
 </div>
