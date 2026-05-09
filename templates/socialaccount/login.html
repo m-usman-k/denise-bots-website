@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load socialaccount %}
+
+{% block title %}{% trans "Sign In" %} - Denise Bots{% endblock %}
+
+{% block content %}
+<div class="glass-card animate-fade" style="max-width: 500px; margin: 4rem auto; text-align: center;">
+    <i class="fab fa-discord bot-icon" style="font-size: 3rem; color: #5865F2;"></i>
+    <h2 style="margin: 1.5rem 0;">{% trans "Sign In via Discord" %}</h2>
+    <p style="margin-bottom: 2rem; opacity: 0.8;">
+        {% blocktrans with provider.name as provider_name %}You are about to sign in using a third-party account from {{ provider_name }}.{% endblocktrans %}
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-discord btn-large" style="width: 100%;">
+            <i class="fab fa-discord"></i> {% trans "Continue to Discord" %}
+        </button>
+    </form>
+</div>
+{% endblock %}
