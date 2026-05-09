@@ -106,7 +106,6 @@ DATABASES = {
         'NAME': env('MONGO_DB_NAME'),
         'CLIENT': {
             'host': env('MONGO_URI'),
-            'authSource': env('MONGO_AUTH_SOURCE'),
         },
     }
 }
