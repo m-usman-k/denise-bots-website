@@ -44,17 +44,18 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    # Django built-in apps — using MongoDB-compatible AppConfig subclasses
+    'config.mongo_app_configs.MongoAdminConfig',
+    'config.mongo_app_configs.MongoAuthConfig',
+    'config.mongo_app_configs.MongoContentTypesConfig',
+    'config.mongo_app_configs.MongoSessionsConfig',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Third-party apps
+    # allauth — using MongoDB-compatible AppConfig subclasses
     'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    'config.mongo_app_configs.MongoAccountConfig',
+    'config.mongo_app_configs.MongoSocialAccountConfig',
     'allauth.socialaccount.providers.discord',
 
     # Local apps
