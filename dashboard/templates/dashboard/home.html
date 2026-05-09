@@ -1,29 +1,29 @@
 {% extends "base.html" %}
 
-{% block title %}Denise Bots - Playful Dashboard{% endblock %}
+{% block title %}Denise Bots - Joyful Dashboard{% endblock %}
 
 {% block content %}
 <section class="hero animate-fade">
-    <div style="background: url('/static/images/animated_hero_bg.png') no-repeat center; background-size: contain; height: 300px; margin-bottom: 2rem; border-radius: 40px;"></div>
+    <div style="background: url('/static/images/bot_character_set.png') no-repeat center; background-size: contain; height: 350px; margin-bottom: 3rem;"></div>
 
-    <h1>The Most Fun Way to Manage Your Bots</h1>
-    <p>A whimsical dashboard built for creators who love a touch of magic. Simple, cheerful, and incredibly powerful.</p>
+    <h1 style="color: var(--white); font-size: clamp(3rem, 10vw, 6rem); margin-bottom: 2rem; letter-spacing: -2px;">The Most Fun Way to Manage Your Bots</h1>
+    <p style="color: var(--white); font-size: 1.5rem; opacity: 0.9; margin-bottom: 3.5rem; max-width: 800px;">A whimsical dashboard built for creators who love a touch of magic. Simple, cheerful, and incredibly powerful.</p>
 
-    <div class="hero-btns">
+    <div style="display: flex; justify-content: center; gap: 2rem;">
         {% if not user.is_authenticated %}
             {% load socialaccount %}
-            <a href="{% provider_login_url 'discord' %}" class="btn btn-primary btn-large">
-                Get Started Now
+            <a href="{% provider_login_url 'discord' %}" class="btn" style="font-size: 1.4rem; padding: 1.2rem 4rem;">
+                Get Started
             </a>
         {% else %}
-            <a href="{% url 'dashboard' %}" class="btn btn-primary btn-large">
+            <a href="{% url 'dashboard' %}" class="btn" style="font-size: 1.4rem; padding: 1.2rem 4rem;">
                 Enter Dashboard
             </a>
         {% endif %}
     </div>
 </section>
 
-<section id="features" class="grid animate-fade">
+<section id="features" class="grid animate-fade" style="margin-top: 5rem;">
     <div class="glass-card">
         <h3>Safe and Sound</h3>
         <p>Your data is protected by high-grade security, ensuring only the right people have access to your bot settings.</p>
