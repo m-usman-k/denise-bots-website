@@ -1,64 +1,65 @@
 {% extends "base.html" %}
 
-{% block title %}{{ bot_name|upper }} - DENISE BOTS{% endblock %}
+{% block title %}{{ bot_name|capfirst }} — Denise Bots{% endblock %}
 
 {% block content %}
 <div class="animate-fade">
+    <!-- Breadcrumbs -->
     <div class="breadcrumbs">
-        <a href="{% url 'dashboard' %}">DASHBOARD</a>
-        <span></span>
-        <span style="color: var(--text-primary);">{{ bot_name|upper }}</span>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <span class="sep">/</span>
+        <span class="current">{{ bot_name|capfirst }}</span>
     </div>
 
-    <div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2.5rem;">
+    <!-- Header -->
+    <div class="dashboard-header">
         <div>
-            <h1 style="margin-bottom: 0.5rem; font-size: clamp(2rem, 5vw, 3.5rem);">{{ bot_name|upper }} NODE</h1>
-            <p style="color: var(--text-secondary); max-width: 500px;">SYSTEM CONFIGURATION AND DATA MANAGEMENT FOR THE {{ bot_name|upper }} MODULE.</p>
+            <h1>{{ bot_name|capfirst }} <span>Management</span></h1>
+            <p style="color: var(--text-muted); margin-top: 0.25rem;">Live data and configuration for the {{ bot_name }} module.</p>
         </div>
-        <a href="{% url 'dashboard' %}" class="btn-close" title="Close Node">
-            <i class="fas fa-times" style="font-size: 1.5rem;"></i>
+        <a href="{% url 'dashboard' %}" class="btn btn-ghost" title="Close">
+            <i class="fas fa-times"></i>
         </a>
     </div>
 
-    <div class="grid">
-        <!-- Main Stats/Data Card -->
-        <div class="glass-card" style="grid-column: 1 / -1;">
-            <h3>ACTIVE DATA STREAM</h3>
-            <p style="margin-bottom: 1.5rem;">REAL-TIME RECORDS FROM THE MONGODB CLUSTER.</p>
-            
-            <div class="table-container" style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+    <div class="grid" style="grid-template-columns: 1fr 300px; align-items: start;">
+        <!-- Data Table -->
+        <div class="glass-card">
+            <h3 style="margin-bottom: 0.4rem;">Live Data Stream</h3>
+            <p style="margin-bottom: 1.5rem;">Records fetched from the MongoDB cluster.</p>
+            <div class="table-container">
+                <table>
                     <thead>
                         <tr>
-                            <th>IDENTIFIER</th>
-                            <th>DATA PAYLOAD</th>
-                            <th style="width: 100px;">ACTIONS</th>
+                            <th>Identifier</th>
+                            <th>Payload</th>
+                            <th style="width: 90px;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for item in data %}
                         <tr>
-                            <td style="font-family: monospace; color: var(--text-secondary);">{{ item.id|default:item.guid|default:item.user_id|default:"-" }}</td>
+                            <td style="font-family: monospace; font-size: 0.8rem;">{{ item.id|default:item.guid|default:item.user_id|default:"—" }}</td>
                             <td>
                                 {% if bot_name == 'giveaway' %}
-                                    <span style="color: var(--text-secondary);">PRIZE:</span> {{ item.prize }} &nbsp;&nbsp;|&nbsp;&nbsp; <span style="color: var(--text-secondary);">WINNERS:</span> {{ item.winners }}
+                                    <span style="color:var(--text-muted)">Prize:</span> {{ item.prize }} &nbsp;|&nbsp; <span style="color:var(--text-muted)">Winners:</span> {{ item.winners }}
                                 {% elif bot_name == 'reputation' %}
-                                    <span style="color: var(--text-secondary);">USER:</span> {{ item.user_id }} &nbsp;&nbsp;|&nbsp;&nbsp; <span style="color: var(--text-secondary);">SCORE:</span> {{ item.points }}
+                                    <span style="color:var(--text-muted)">User:</span> {{ item.user_id }} &nbsp;|&nbsp; <span style="color:var(--text-muted)">Score:</span> {{ item.points }}
                                 {% elif bot_name == 'ticket' %}
-                                    <span style="color: var(--text-secondary);">TICKET #</span>{{ item.id }} &nbsp;&nbsp;|&nbsp;&nbsp; <span style="color: var(--text-secondary);">STATUS:</span> {{ item.status }}
+                                    <span style="color:var(--text-muted)">Ticket #</span>{{ item.id }} &nbsp;|&nbsp; <span style="color:var(--text-muted)">Status:</span> {{ item.status }}
                                 {% else %}
                                     {{ item }}
                                 {% endif %}
                             </td>
                             <td>
-                                <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.75rem;">EDIT</button>
+                                <button class="btn btn-secondary" style="padding: 0.4rem 0.9rem; font-size: 0.78rem;">Edit</button>
                             </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="3" style="padding: 4rem; text-align: center; color: var(--text-muted);">
-                                <i class="fas fa-database" style="font-size: 2rem; display: block; margin-bottom: 1rem; opacity: 0.3;"></i>
-                                NO RECORDS FOUND IN COLLECTION.
+                            <td colspan="3" style="padding: 3.5rem; text-align: center; color: var(--text-muted);">
+                                <i class="fas fa-database" style="font-size: 2rem; display: block; margin-bottom: 1rem; opacity: 0.25;"></i>
+                                No records found in this collection yet.
                             </td>
                         </tr>
                         {% endfor %}
@@ -67,21 +68,27 @@
             </div>
         </div>
 
-        <!-- Settings Card -->
-        <div class="glass-card">
-            <h3>NODE CONFIGURATION</h3>
-            <p style="margin-bottom: 1.5rem;">RUNTIME SETTINGS FOR THIS MODULE.</p>
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-dim); padding-bottom: 1rem;">
-                    <span style="font-weight: 500;">ENABLE MODULE</span>
-                    <input type="checkbox" checked style="accent-color: var(--text-primary); transform: scale(1.2);">
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-dim); padding-bottom: 1rem;">
-                    <span style="font-weight: 500;">LOG EVENTS</span>
-                    <input type="checkbox" checked style="accent-color: var(--text-primary); transform: scale(1.2);">
-                </div>
-                <button class="btn" style="margin-top: 1rem; align-self: flex-start;">SAVE CONFIGURATION</button>
+        <!-- Settings Panel -->
+        <div class="glass-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div>
+                <h3 style="margin-bottom: 0.4rem;">Module Settings</h3>
+                <p>Configure runtime behaviour for this node.</p>
             </div>
+
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.9rem; font-weight: 500;">Enable Module</span>
+                    <input type="checkbox" checked style="accent-color: var(--accent-from); transform: scale(1.3);">
+                </div>
+                <div style="border-top: 1px solid var(--border);"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.9rem; font-weight: 500;">Log Events</span>
+                    <input type="checkbox" checked style="accent-color: var(--accent-from); transform: scale(1.3);">
+                </div>
+                <div style="border-top: 1px solid var(--border);"></div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%;">Save Changes</button>
         </div>
     </div>
 </div>

@@ -6,31 +6,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Denise Bots{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
     <nav class="glass-nav">
         <div class="nav-container">
             <a href="{% url 'home' %}" class="logo">
-                DENISE <span class="logo-accent">BOTS</span>
+                <span class="logo-text">DENISE</span><span class="logo-accent">BOTS</span>
             </a>
             <div class="nav-links">
-                <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">HOME</a>
+                <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">DASHBOARD</a>
+                    <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
                     {% if user.is_main_admin %}
-                        <a href="{% url 'manage_admins' %}" class="{% if request.resolver_match.url_name == 'manage_admins' %}active{% endif %}">ADMINS</a>
+                        <a href="{% url 'manage_admins' %}" class="{% if request.resolver_match.url_name == 'manage_admins' %}active{% endif %}">Admins</a>
                     {% endif %}
                     <div class="user-menu">
                         <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar">
+                        <span style="font-size: 0.88rem; color: var(--text-secondary);">{{ user.username }}</span>
                         <div class="dropdown">
-                            <a href="{% url 'account_logout' %}">SIGN OUT</a>
+                            <a href="{% url 'account_logout' %}"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
                         </div>
                     </div>
                 {% else %}
-                    <a href="{% provider_login_url 'discord' %}" class="btn">SIGN IN</a>
+                    <a href="{% provider_login_url 'discord' %}" class="btn btn-primary"><i class="fab fa-discord"></i> Sign In</a>
                 {% endif %}
             </div>
         </div>
@@ -38,18 +39,15 @@
 
     <main class="content-wrapper">
         {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                {% endfor %}
-            </div>
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
         {% endif %}
-
         {% block content %}{% endblock %}
     </main>
 
     <footer class="glass-footer">
-        <p>&copy; 2026 DENISE BOTS. ALL RIGHTS RESERVED.</p>
+        <p>© 2026 Denise Bots — Built with <i class="fas fa-heart"></i> for the community.</p>
     </footer>
 
     <script src="{% static 'js/main.js' %}"></script>

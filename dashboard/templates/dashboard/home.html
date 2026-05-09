@@ -1,36 +1,39 @@
 {% extends "base.html" %}
 
-{% block title %}DENISE BOTS{% endblock %}
+{% block title %}Denise Bots — Discord Bot Management{% endblock %}
 
 {% block content %}
 <section class="hero animate-fade">
-    <h1>POWERING COMMUNITIES.</h1>
-    <p>A UNIFIED REPOSITORY FOR MANAGING AND SCALING YOUR DISCORD ECOSYSTEM. BUILT FOR MODERN ADMINISTRATORS WHO DEMAND EFFICIENCY AND SECURITY.</p>
-    
-    {% if not user.is_authenticated %}
-        {% load socialaccount %}
-        <a href="{% provider_login_url 'discord' %}" class="btn btn-large">
-            SIGN IN WITH DISCORD
-        </a>
-    {% else %}
-        <a href="{% url 'dashboard' %}" class="btn btn-large">
-            OPEN DASHBOARD
-        </a>
-    {% endif %}
+    <h1>Powering Communities with <span class="accent">Denise Bots</span></h1>
+    <p>A unified dashboard to manage, monitor, and scale your Discord bots. Secure, efficient, and built for modern server administrators.</p>
+    <div class="hero-btns">
+        {% if not user.is_authenticated %}
+            {% load socialaccount %}
+            <a href="{% provider_login_url 'discord' %}" class="btn btn-primary btn-large">
+                <i class="fab fa-discord"></i> Get Started
+            </a>
+            <a href="#features" class="btn btn-secondary btn-large">Learn More</a>
+        {% else %}
+            <a href="{% url 'dashboard' %}" class="btn btn-primary btn-large">Open Dashboard</a>
+        {% endif %}
+    </div>
 </section>
 
-<section class="grid animate-fade">
+<section id="features" class="grid animate-fade">
     <div class="glass-card">
-        <h3>SECURE PROTOCOLS</h3>
-        <p>OAUTH2 INTEGRATION ENSURES ONLY AUTHORIZED ACCESS TO CORE BOT ARCHITECTURE AND CONFIGURATIONS.</p>
+        <div class="bot-icon"><i class="fas fa-shield-halved"></i></div>
+        <h3>Secure OAuth2 Login</h3>
+        <p>Discord OAuth2 integration ensures only authorized administrators can access your bot configuration and sensitive data.</p>
     </div>
     <div class="glass-card">
-        <h3>CENTRALIZED DATA</h3>
-        <p>ALL BOT MODULES UTILIZE A UNIFIED MONGODB BACKEND FOR REAL-TIME DATA SYNCHRONIZATION AND SCALABILITY.</p>
+        <div class="bot-icon"><i class="fas fa-database"></i></div>
+        <h3>Centralized MongoDB</h3>
+        <p>All bot modules share a unified MongoDB cluster for real-time data synchronization and high-availability storage.</p>
     </div>
     <div class="glass-card">
-        <h3>ANALYTIC INSIGHTS</h3>
-        <p>MONITOR DONATIONS, TICKET METRICS, AND REPUTATION SCORES THROUGH A CONSOLIDATED ANALYTICS INTERFACE.</p>
+        <div class="bot-icon"><i class="fas fa-chart-line"></i></div>
+        <h3>Real-time Analytics</h3>
+        <p>Monitor donation leaderboards, active tickets, giveaway entries, and user reputation scores at a glance.</p>
     </div>
 </section>
 {% endblock %}
