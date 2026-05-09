@@ -106,11 +106,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django_mongodb_backend',
         'NAME': env('MONGO_DB_NAME'),
+        'USER': env('MONGO_USER'),
+        'PASSWORD': env('MONGO_PASS'),
+        'HOST': '13.212.150.216',
+        'PORT': 27017,
         'CLIENT': {
-            'host': env('MONGO_URI'),
             'authSource': env('MONGO_AUTH_SOURCE'),
-            'username': env('MONGO_USER'),
-            'password': env('MONGO_PASS'),
         },
     }
 }
