@@ -50,7 +50,9 @@
 
                     <!-- User pill with hover dropdown -->
                     <div class="nav-user" tabindex="0">
-                        <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar">
+                        <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <span class="nav-avatar-fallback">{{ user.username|first|upper }}</span>
                         <span>{{ user.username }}</span>
                         <i class="ph ph-caret-down" style="font-size:0.8rem;opacity:0.8;"></i>
                         <div class="nav-dropdown">
