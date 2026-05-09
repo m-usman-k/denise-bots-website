@@ -4,9 +4,9 @@
 
 {% block content %}
 <div class="animate-fade">
-    <div class="dashboard-header" style="margin-bottom: 4rem;">
-        <h1 style="font-family: 'Fredoka', sans-serif; font-size: 4rem; font-weight: 800; color: #1a1a1a;">Control Center</h1>
-        <p style="font-size: 1.4rem; font-weight: 800; color: #555; text-transform: uppercase;">Managing the bot universe.</p>
+    <div class="dashboard-header" style="margin-bottom: 5rem;">
+        <h1>Control Center</h1>
+        <p style="font-size: 1.8rem; font-weight: 800; color: var(--white); text-transform: uppercase; -webkit-text-stroke: 1px #000;">Managing the bot universe.</p>
     </div>
 
     <!-- Stats -->
@@ -24,44 +24,44 @@
             <div class="stat-label">Reports</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value" style="font-size: 2.5rem;">{% if user.is_main_admin %}OWNER{% else %}STAFF{% endif %}</div>
+            <div class="stat-value" style="font-size: 3rem;">{% if user.is_main_admin %}OWNER{% else %}STAFF{% endif %}</div>
             <div class="stat-label">Access</div>
         </div>
     </div>
 
-    <h2 style="font-family: 'Fredoka', sans-serif; font-size: 2.5rem; font-weight: 800; margin-bottom: 3rem; text-transform: uppercase; background: #1a1a1a; color: white; display: inline-block; padding: 0.5rem 2rem;">Your Collection</h2>
+    <h2>Your Collection</h2>
     
     <div class="grid">
         <!-- Donations -->
         <div class="glass-card">
             <h3>Donations</h3>
-            <p style="font-weight: 800;">Keep track of all the kindness in your community with our easy donation tools.</p>
-            <div style="background: #1a1a1a; color: #4caf50; padding: 0.5rem 1rem; font-weight: 800; display: inline-block; margin-bottom: 2rem; border: 2px solid #4caf50;">ONLINE</div>
-            <a href="{% url 'bot_detail' 'donations' %}" class="btn" style="width: 100%;">Configure</a>
+            <p>Keep track of all the kindness in your community with our easy donation tools.</p>
+            <div style="background: #000; color: #00ff00; padding: 0.8rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 10px;">ONLINE</div>
+            <a href="{% url 'bot_detail' 'donations' %}" class="btn btn-secondary" style="width: 100%;">Configure</a>
         </div>
 
         <!-- Giveaway -->
         <div class="glass-card">
             <h3>Giveaways</h3>
-            <p style="font-weight: 800;">Spread the joy! Create and manage fun giveaways for your members to win prizes.</p>
-            <div style="background: #1a1a1a; color: #4caf50; padding: 0.5rem 1rem; font-weight: 800; display: inline-block; margin-bottom: 2rem; border: 2px solid #4caf50;">ONLINE</div>
-            <a href="{% url 'bot_detail' 'giveaway' %}" class="btn" style="width: 100%;">Configure</a>
+            <p>Spread the joy! Create and manage fun giveaways for your members to win prizes.</p>
+            <div style="background: #000; color: #00ff00; padding: 0.8rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 10px;">ONLINE</div>
+            <a href="{% url 'bot_detail' 'giveaway' %}" class="btn btn-secondary" style="width: 100%;">Configure</a>
         </div>
 
         <!-- Reputation -->
         <div class="glass-card">
             <h3>Reputation</h3>
-            <p style="font-weight: 800;">Celebrate your best members with a reputation system that rewards good vibes.</p>
-            <div style="background: #1a1a1a; color: #4caf50; padding: 0.5rem 1rem; font-weight: 800; display: inline-block; margin-bottom: 2rem; border: 2px solid #4caf50;">ONLINE</div>
-            <a href="{% url 'bot_detail' 'reputation' %}" class="btn" style="width: 100%;">Configure</a>
+            <p>Celebrate your best members with a reputation system that rewards good vibes.</p>
+            <div style="background: #000; color: #00ff00; padding: 0.8rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 10px;">ONLINE</div>
+            <a href="{% url 'bot_detail' 'reputation' %}" class="btn btn-secondary" style="width: 100%;">Configure</a>
         </div>
 
         <!-- Ticket -->
         <div class="glass-card">
             <h3>Support</h3>
-            <p style="font-weight: 800;">Help is just a click away! Manage support tickets in a friendly and organized way.</p>
-            <div style="background: #1a1a1a; color: #4caf50; padding: 0.5rem 1rem; font-weight: 800; display: inline-block; margin-bottom: 2rem; border: 2px solid #4caf50;">ONLINE</div>
-            <a href="{% url 'bot_detail' 'ticket' %}" class="btn" style="width: 100%;">Configure</a>
+            <p>Help is just a click away! Manage support tickets in a friendly and organized way.</p>
+            <div style="background: #000; color: #00ff00; padding: 0.8rem 1.5rem; font-weight: 800; display: inline-block; margin-bottom: 2.5rem; border-radius: 10px;">ONLINE</div>
+            <a href="{% url 'bot_detail' 'ticket' %}" class="btn btn-secondary" style="width: 100%;">Configure</a>
         </div>
     </div>
 </div>

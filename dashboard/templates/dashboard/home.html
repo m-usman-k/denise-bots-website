@@ -1,40 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}Denise Bots - Comic Dashboard{% endblock %}
+{% block title %}Denise Bots - Pop Art Dashboard{% endblock %}
 
 {% block content %}
 <section class="hero animate-fade">
-    <div style="background: url('/static/images/bot_character_set.png') no-repeat center; background-size: contain; height: 450px; margin-bottom: 3rem; filter: drop-shadow(10px 10px 0px rgba(0,0,0,0.2));"></div>
+    <div style="background: url('/static/images/bot_character_set.png') no-repeat center; background-size: contain; height: 450px; margin-bottom: 4rem; filter: drop-shadow(15px 15px 0px #000);"></div>
 
-    <h1>THE MOST FUN WAY TO MANAGE BOTS</h1>
-    <p style="font-size: 1.8rem; font-weight: 800; color: #1a1a1a; margin-bottom: 4rem; text-transform: uppercase;">A whimsical universe built for creators who love a touch of magic.</p>
+    <h1>UNLOCK THE BEST BOT DASHBOARD</h1>
+    <p style="font-size: 2rem; font-weight: 800; color: var(--white); margin-bottom: 5rem; text-transform: uppercase; -webkit-text-stroke: 1.5px #000; text-shadow: 4px 4px 0px #000;">Simple, cheerful, and incredibly powerful.</p>
 
-    <div style="display: flex; justify-content: center; gap: 2rem;">
+    <div style="display: flex; justify-content: center; gap: 3rem;">
         {% if not user.is_authenticated %}
             {% load socialaccount %}
-            <a href="{% provider_login_url 'discord' %}" class="btn" style="padding: 1.5rem 4rem; font-size: 1.5rem;">
-                GET STARTED NOW
+            <a href="{% provider_login_url 'discord' %}" class="btn" style="padding: 1.5rem 5rem; font-size: 1.5rem;">
+                GET STARTED
             </a>
         {% else %}
-            <a href="{% url 'dashboard' %}" class="btn" style="padding: 1.5rem 4rem; font-size: 1.5rem;">
+            <a href="{% url 'dashboard' %}" class="btn" style="padding: 1.5rem 5rem; font-size: 1.5rem;">
                 ENTER DASHBOARD
             </a>
         {% endif %}
     </div>
 </section>
 
-<section id="features" class="grid animate-fade" style="margin-top: 8rem;">
+<section id="features" class="grid animate-fade" style="margin-top: 10rem;">
     <div class="glass-card">
         <h3>SAFE & SOUND</h3>
-        <p style="font-weight: 800;">YOUR DATA IS PROTECTED BY HIGH-GRADE SECURITY, ENSURING ONLY THE RIGHT PEOPLE HAVE ACCESS.</p>
+        <p>YOUR DATA IS PROTECTED BY HIGH-GRADE SECURITY, ENSURING ONLY THE RIGHT PEOPLE HAVE ACCESS.</p>
     </div>
     <div class="glass-card">
         <h3>MAGIC HUB</h3>
-        <p style="font-weight: 800;">EVERYTHING IS STORED IN A CENTRALIZED CLUSTER, MAKING SYNCING A BREEZE ACROSS SERVERS.</p>
+        <p>EVERYTHING IS STORED IN A CENTRALIZED CLUSTER, MAKING SYNCING A BREEZE ACROSS SERVERS.</p>
     </div>
     <div class="glass-card">
         <h3>LIVE DATA</h3>
-        <p style="font-weight: 800;">WATCH YOUR COMMUNITY GROW IN REAL-TIME WITH BEAUTIFUL COMIC-STYLE TABLES AND STATS.</p>
+        <p>WATCH YOUR COMMUNITY GROW IN REAL-TIME WITH BEAUTIFUL POP-ART TABLES AND STATS.</p>
     </div>
 </section>
 {% endblock %}
