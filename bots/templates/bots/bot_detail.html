@@ -1,58 +1,64 @@
 {% extends "base.html" %}
 
-{% block title %}{{ bot_name|capfirst }} Dashboard - Denise Bots{% endblock %}
+{% block title %}{{ bot_name|upper }} - DENISE BOTS{% endblock %}
 
 {% block content %}
 <div class="animate-fade">
-    <div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div class="breadcrumbs">
+        <a href="{% url 'dashboard' %}">DASHBOARD</a>
+        <span></span>
+        <span style="color: var(--text-primary);">{{ bot_name|upper }}</span>
+    </div>
+
+    <div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2.5rem;">
         <div>
-            <h1 style="margin-bottom: 0.5rem;">{{ bot_name|capfirst }} Management</h1>
-            <p style="opacity: 0.7;">View and manage your {{ bot_name }} bot settings and data.</p>
+            <h1 style="margin-bottom: 0.5rem; font-size: clamp(2rem, 5vw, 3.5rem);">{{ bot_name|upper }} NODE</h1>
+            <p style="color: var(--text-secondary); max-width: 500px;">SYSTEM CONFIGURATION AND DATA MANAGEMENT FOR THE {{ bot_name|upper }} MODULE.</p>
         </div>
-        <a href="{% url 'dashboard' %}" class="btn btn-primary">
-            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        <a href="{% url 'dashboard' %}" class="btn-close" title="Close Node">
+            <i class="fas fa-times" style="font-size: 1.5rem;"></i>
         </a>
     </div>
 
     <div class="grid">
         <!-- Main Stats/Data Card -->
-        <div class="glass-card" style="grid-column: span 2;">
-            <h3><i class="fas fa-database bot-icon"></i> Active {{ bot_name|capfirst }} Data</h3>
-            <p style="margin-bottom: 1.5rem;">Below is the current data pulled from the MongoDB cluster.</p>
+        <div class="glass-card" style="grid-column: 1 / -1;">
+            <h3>ACTIVE DATA STREAM</h3>
+            <p style="margin-bottom: 1.5rem;">REAL-TIME RECORDS FROM THE MONGODB CLUSTER.</p>
             
             <div class="table-container" style="overflow-x: auto;">
                 <table style="width: 100%; border-collapse: collapse; text-align: left;">
                     <thead>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            <th style="padding: 1rem;">ID</th>
-                            <th style="padding: 1rem;">Data Summary</th>
-                            <th style="padding: 1rem;">Actions</th>
+                        <tr>
+                            <th>IDENTIFIER</th>
+                            <th>DATA PAYLOAD</th>
+                            <th style="width: 100px;">ACTIONS</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for item in data %}
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                            <td style="padding: 1rem; font-family: monospace; font-size: 0.9rem;">{{ item.id|default:item.guid|default:item.user_id|default:"-" }}</td>
-                            <td style="padding: 1rem;">
+                        <tr>
+                            <td style="font-family: monospace; color: var(--text-secondary);">{{ item.id|default:item.guid|default:item.user_id|default:"-" }}</td>
+                            <td>
                                 {% if bot_name == 'giveaway' %}
-                                    Prize: {{ item.prize }} | Winners: {{ item.winners }}
+                                    <span style="color: var(--text-secondary);">PRIZE:</span> {{ item.prize }} &nbsp;&nbsp;|&nbsp;&nbsp; <span style="color: var(--text-secondary);">WINNERS:</span> {{ item.winners }}
                                 {% elif bot_name == 'reputation' %}
-                                    User: {{ item.user_id }} | Rep: {{ item.points }}
+                                    <span style="color: var(--text-secondary);">USER:</span> {{ item.user_id }} &nbsp;&nbsp;|&nbsp;&nbsp; <span style="color: var(--text-secondary);">SCORE:</span> {{ item.points }}
                                 {% elif bot_name == 'ticket' %}
-                                    Ticket #{{ item.id }} | Status: {{ item.status }}
+                                    <span style="color: var(--text-secondary);">TICKET #</span>{{ item.id }} &nbsp;&nbsp;|&nbsp;&nbsp; <span style="color: var(--text-secondary);">STATUS:</span> {{ item.status }}
                                 {% else %}
                                     {{ item }}
                                 {% endif %}
                             </td>
-                            <td style="padding: 1rem;">
-                                <button class="btn btn-primary btn-small" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Edit</button>
+                            <td>
+                                <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.75rem;">EDIT</button>
                             </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="3" style="padding: 3rem; text-align: center; opacity: 0.5;">
-                                <i class="fas fa-folder-open" style="font-size: 2rem; display: block; margin-bottom: 1rem;"></i>
-                                No data found in the {{ bot_name }} collection.
+                            <td colspan="3" style="padding: 4rem; text-align: center; color: var(--text-muted);">
+                                <i class="fas fa-database" style="font-size: 2rem; display: block; margin-bottom: 1rem; opacity: 0.3;"></i>
+                                NO RECORDS FOUND IN COLLECTION.
                             </td>
                         </tr>
                         {% endfor %}
@@ -63,18 +69,18 @@
 
         <!-- Settings Card -->
         <div class="glass-card">
-            <h3><i class="fas fa-cog bot-icon"></i> Bot Settings</h3>
-            <p style="margin-bottom: 1rem; font-size: 0.9rem;">Configure how the {{ bot_name }} module behaves in your servers.</p>
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <label class="switch-container" style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>Enable Module</span>
-                    <input type="checkbox" checked>
-                </label>
-                <label class="switch-container" style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>Log Events</span>
-                    <input type="checkbox" checked>
-                </label>
-                <button class="btn btn-primary" style="margin-top: 1rem;">Save Changes</button>
+            <h3>NODE CONFIGURATION</h3>
+            <p style="margin-bottom: 1.5rem;">RUNTIME SETTINGS FOR THIS MODULE.</p>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-dim); padding-bottom: 1rem;">
+                    <span style="font-weight: 500;">ENABLE MODULE</span>
+                    <input type="checkbox" checked style="accent-color: var(--text-primary); transform: scale(1.2);">
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-dim); padding-bottom: 1rem;">
+                    <span style="font-weight: 500;">LOG EVENTS</span>
+                    <input type="checkbox" checked style="accent-color: var(--text-primary); transform: scale(1.2);">
+                </div>
+                <button class="btn" style="margin-top: 1rem; align-self: flex-start;">SAVE CONFIGURATION</button>
             </div>
         </div>
     </div>

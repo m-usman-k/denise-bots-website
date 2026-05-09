@@ -1,37 +1,36 @@
 {% extends "base.html" %}
 
-{% block title %}Welcome - Denise Bots{% endblock %}
+{% block title %}DENISE BOTS{% endblock %}
 
 {% block content %}
 <section class="hero animate-fade">
-    <h1>Powering Communities with <span class="logo-accent">Denise Bots</span></h1>
-    <p>A unified dashboard to manage, monitor, and scale your Discord bots. Secure, efficient, and built for administrators.</p>
+    <h1>POWERING COMMUNITIES.</h1>
+    <p>A UNIFIED REPOSITORY FOR MANAGING AND SCALING YOUR DISCORD ECOSYSTEM. BUILT FOR MODERN ADMINISTRATORS WHO DEMAND EFFICIENCY AND SECURITY.</p>
     
     {% if not user.is_authenticated %}
         {% load socialaccount %}
-        <a href="{% provider_login_url 'discord' %}" class="btn btn-discord btn-large">
-            <i class="fab fa-discord"></i> Get Started with Discord
+        <a href="{% provider_login_url 'discord' %}" class="btn btn-large">
+            SIGN IN WITH DISCORD
         </a>
     {% else %}
-        <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+        <a href="{% url 'dashboard' %}" class="btn btn-large">
+            OPEN DASHBOARD
+        </a>
     {% endif %}
 </section>
 
-<section class="grid">
+<section class="grid animate-fade">
     <div class="glass-card">
-        <i class="fas fa-shield-alt bot-icon"></i>
-        <h3>Secure Management</h3>
-        <p>OAuth2 Discord integration ensures only authorized users access your bot's core settings.</p>
+        <h3>SECURE PROTOCOLS</h3>
+        <p>OAUTH2 INTEGRATION ENSURES ONLY AUTHORIZED ACCESS TO CORE BOT ARCHITECTURE AND CONFIGURATIONS.</p>
     </div>
     <div class="glass-card">
-        <i class="fas fa-bolt bot-icon"></i>
-        <h3>Unified Database</h3>
-        <p>All your bots share a centralized MongoDB database for seamless data synchronization.</p>
+        <h3>CENTRALIZED DATA</h3>
+        <p>ALL BOT MODULES UTILIZE A UNIFIED MONGODB BACKEND FOR REAL-TIME DATA SYNCHRONIZATION AND SCALABILITY.</p>
     </div>
     <div class="glass-card">
-        <i class="fas fa-chart-line bot-icon"></i>
-        <h3>Real-time Stats</h3>
-        <p>Monitor donation leaderboards, ticket counts, and user reputation at a glance.</p>
+        <h3>ANALYTIC INSIGHTS</h3>
+        <p>MONITOR DONATIONS, TICKET METRICS, AND REPUTATION SCORES THROUGH A CONSOLIDATED ANALYTICS INTERFACE.</p>
     </div>
 </section>
 {% endblock %}
