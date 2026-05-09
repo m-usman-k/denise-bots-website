@@ -5,8 +5,8 @@
 {% block content %}
 <div class="animate-fade">
     <div class="dashboard-header">
-        <h1><span>✨</span> Main Control Center</h1>
-        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; padding-left: 3rem;">Managing your whimsical bot family.</p>
+        <h1><i data-lucide="sparkles" style="width: 28px; height: 28px; color: #fde047;"></i> Main Control Center</h1>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; padding-left: 2.8rem;">Managing your whimsical bot family.</p>
     </div>
 
     <div class="dashed-line"></div>
@@ -14,75 +14,75 @@
     <!-- Stats -->
     <div class="stats-grid">
         <div class="stat-card" style="background: var(--accent-purple);">
-            <div class="stat-icon">🤖</div>
+            <div class="stat-icon"><i data-lucide="bot" style="color: #a855f7;"></i></div>
             <div class="stat-content">
                 <div class="stat-value">{{ active_bots }}</div>
                 <div class="stat-label">Active Bots</div>
             </div>
         </div>
-        <div class="stat-card" style="background: #fed7e2;">
-            <div class="stat-icon">👥</div>
+        <div class="stat-card" style="background: var(--accent-pink);">
+            <div class="stat-icon"><i data-lucide="users" style="color: #ec4899;"></i></div>
             <div class="stat-content">
                 <div class="stat-value">{{ user_count }}</div>
                 <div class="stat-label">Members</div>
             </div>
         </div>
         <div class="stat-card" style="background: var(--accent-purple);">
-            <div class="stat-icon">📄</div>
+            <div class="stat-icon"><i data-lucide="file-text" style="color: #a855f7;"></i></div>
             <div class="stat-content">
                 <div class="stat-value">0</div>
                 <div class="stat-label">Reports</div>
             </div>
         </div>
         <div class="stat-card" style="background: var(--accent-blue);">
-            <div class="stat-icon">👑</div>
+            <div class="stat-icon"><i data-lucide="crown" style="color: #3b82f6;"></i></div>
             <div class="stat-content">
-                <div class="stat-value" style="font-size: 1.5rem;">{% if user.is_main_admin %}Owner{% else %}Staff{% endif %}</div>
+                <div class="stat-value" style="font-size: 1.4rem;">{% if user.is_main_admin %}Owner{% else %}Staff{% endif %}</div>
                 <div class="stat-label">Access</div>
             </div>
         </div>
     </div>
 
-    <h2 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 2rem; color: #818cf8; display: flex; align-items: center; gap: 0.5rem;">
-        <span>☁️</span> Your Bot Collection
+    <h2 style="font-size: 1rem; font-weight: 700; margin-bottom: 2rem; color: #94a3b8; display: flex; align-items: center; gap: 0.6rem;">
+        <i data-lucide="cloud" style="width: 20px; height: 20px;"></i> Your Bot Collection
     </h2>
     
     <div class="grid">
         <!-- Donations -->
         <div class="glass-card">
             <div class="card-top">
-                <div class="bot-icon-circle" style="background: #e0e7ff;">
-                    <span style="font-size: 1.8rem;">❤️</span>
+                <div class="bot-icon-circle" style="background: #eff6ff;">
+                    <i data-lucide="heart" style="color: #3b82f6; width: 28px; height: 28px;"></i>
                 </div>
                 <div class="card-info">
                     <h3>Donations</h3>
-                    <p>Keep track of all the kindness in your community with our easy donation tools.</p>
+                    <p>Keep track of all the kindness in your community with our easy tools.</p>
                 </div>
             </div>
             <div class="status-indicator"><div class="status-dot"></div> Active</div>
-            <a href="{% url 'bot_detail' 'donations' %}" class="btn">Manage <span>›</span></a>
+            <a href="{% url 'bot_detail' 'donations' %}" class="btn">Manage <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></a>
         </div>
 
         <!-- Giveaway -->
         <div class="glass-card">
             <div class="card-top">
-                <div class="bot-icon-circle" style="background: #fed7e2;">
-                    <span style="font-size: 1.8rem;">🎁</span>
+                <div class="bot-icon-circle" style="background: #fdf2f8;">
+                    <i data-lucide="gift" style="color: #ec4899; width: 28px; height: 28px;"></i>
                 </div>
                 <div class="card-info">
                     <h3>Giveaways</h3>
-                    <p>Spread the joy! Create and manage fun giveaways for your members to win prizes.</p>
+                    <p>Spread the joy! Create and manage fun giveaways for your members.</p>
                 </div>
             </div>
             <div class="status-indicator"><div class="status-dot"></div> Active</div>
-            <a href="{% url 'bot_detail' 'giveaway' %}" class="btn">Manage <span>›</span></a>
+            <a href="{% url 'bot_detail' 'giveaway' %}" class="btn">Manage <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></a>
         </div>
 
         <!-- Reputation -->
         <div class="glass-card">
             <div class="card-top">
-                <div class="bot-icon-circle" style="background: #e9d5ff;">
-                    <span style="font-size: 1.8rem;">⭐</span>
+                <div class="bot-icon-circle" style="background: #f5f3ff;">
+                    <i data-lucide="star" style="color: #a855f7; width: 28px; height: 28px;"></i>
                 </div>
                 <div class="card-info">
                     <h3>Reputation</h3>
@@ -90,22 +90,22 @@
                 </div>
             </div>
             <div class="status-indicator"><div class="status-dot"></div> Active</div>
-            <a href="{% url 'bot_detail' 'reputation' %}" class="btn">Manage <span>›</span></a>
+            <a href="{% url 'bot_detail' 'reputation' %}" class="btn">Manage <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></a>
         </div>
 
         <!-- Ticket -->
         <div class="glass-card">
             <div class="card-top">
-                <div class="bot-icon-circle" style="background: #e0e7ff;">
-                    <span style="font-size: 1.8rem;">🎧</span>
+                <div class="bot-icon-circle" style="background: #eff6ff;">
+                    <i data-lucide="headset" style="color: #3b82f6; width: 28px; height: 28px;"></i>
                 </div>
                 <div class="card-info">
                     <h3>Support</h3>
-                    <p>Help is just a click away! Manage support tickets in a friendly and organized way.</p>
+                    <p>Help is just a click away! Manage support tickets in a friendly way.</p>
                 </div>
             </div>
             <div class="status-indicator"><div class="status-dot"></div> Active</div>
-            <a href="{% url 'bot_detail' 'ticket' %}" class="btn">Manage <span>›</span></a>
+            <a href="{% url 'bot_detail' 'ticket' %}" class="btn">Manage <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i></a>
         </div>
     </div>
 </div>

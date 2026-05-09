@@ -6,28 +6,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Denise Bots{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=4.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
     <header class="wavy-header">
         <nav class="nav-container">
             <a href="{% url 'home' %}" class="logo">
-                <span>☁️</span> Denise Bots <span>✨</span>
+                <i data-lucide="cloud" style="width: 32px; height: 32px; color: white;"></i>
+                Denise Bots
+                <i data-lucide="sparkle" style="width: 20px; height: 20px; color: #fde047;"></i>
             </a>
             
             <div class="nav-links">
                 <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-                    <span style="font-size: 1.2rem;">⭐</span> Home
+                    <i data-lucide="star" style="width: 18px; height: 18px;"></i> Home
                 </a>
                 
                 {% if user.is_authenticated %}
                     <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-                        <span style="font-size: 1.2rem;">📊</span> Dashboard
+                        <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i> Dashboard
                     </a>
                     <div class="user-menu">
                         <img src="{{ user.avatar_url }}" alt="{{ user.username }}" class="nav-avatar">
-                        <span style="font-weight: 700;">{{ user.username }} ⌵</span>
+                        <span>{{ user.username }} <i data-lucide="chevron-down" style="width: 14px; height: 14px; display: inline-block;"></i></span>
                         <div class="dropdown">
                             <a href="{% url 'account_logout' %}">Sign Out</a>
                         </div>
@@ -42,16 +46,20 @@
     <main class="content-wrapper">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                <div class="alert {{ message.tags }}">{{ message }}</div>
             {% endfor %}
         {% endif %}
         {% block content %}{% endblock %}
     </main>
 
     <footer class="glass-footer">
-        <p>Built for the community - Denise Bots 2026</p>
+        <p>&copy; 2024 Denise Bots - Magical Adventures Await!</p>
     </footer>
 
+    <!-- Initialize Lucide Icons -->
+    <script>
+      lucide.createIcons();
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
