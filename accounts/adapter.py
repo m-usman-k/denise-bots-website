@@ -4,8 +4,8 @@ from django.conf import settings
 
 class NoSignupAdapter(DefaultAccountAdapter):
     def is_open_for_signup(self, request):
-        # Only allow signup if it is coming from a social provider (Discord)
-        if hasattr(request, 'sociallogin'):
+        # Allow signup if it's coming from the social account flow
+        if request.path.startswith('/accounts/social/') or request.path.startswith('/accounts/discord/'):
             return True
         return False
 
