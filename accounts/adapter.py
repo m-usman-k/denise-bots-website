@@ -1,5 +1,10 @@
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from allauth.account.adapter import DefaultAccountAdapter
 from django.conf import settings
+
+class NoSignupAdapter(DefaultAccountAdapter):
+    def is_open_for_signup(self, request):
+        return False
 
 class DiscordAdapter(DefaultSocialAccountAdapter):
     def save_user(self, request, sociallogin, form=None):

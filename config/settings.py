@@ -192,6 +192,11 @@ LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
+# Disable standard signup/login
+ACCOUNT_ADAPTER = 'accounts.adapter.NoSignupAdapter'
+SOCIALACCOUNT_AUTO_SIGNUP = True
+ACCOUNT_LOGIN_ON_GET = True
+
 SOCIALACCOUNT_PROVIDERS = {
     'discord': {
         'SCOPE': ['identify', 'email', 'guilds'],
