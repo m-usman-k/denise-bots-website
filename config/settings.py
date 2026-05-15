@@ -20,11 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, []),
-    MONGO_URI=(str, 'mongodb://localhost:27017/'),
-    MONGO_DB_NAME=(str, 'denise_bots'),
-    MONGO_USER=(str, ''),
-    MONGO_PASS=(str, ''),
-    MONGO_AUTH_SOURCE=(str, 'admin'),
+    DB_NAME=(str, 'simpleprog_db'),
+    DB_USER=(str, 'simpleprog'),
+    DB_PASSWORD=(str, 'jf83hj032fjkldsa'),
+    DB_HOST=(str, 'localhost'),
+    DB_PORT=(int, 3306),
     DISCORD_CLIENT_ID=(str, ''),
     DISCORD_CLIENT_SECRET=(str, ''),
 )
@@ -46,21 +46,18 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 # Application definition
 
 INSTALLED_APPS = [
-    # Django built-in apps — using MongoDB-compatible AppConfig subclasses
-    'config.mongo_app_configs.MongoAdminConfig',
-    'config.mongo_app_configs.MongoAuthConfig',
-    'config.mongo_app_configs.MongoContentTypesConfig',
-    'config.mongo_app_configs.MongoSessionsConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # allauth — using MongoDB-compatible AppConfig subclasses
     'allauth',
-    'config.mongo_app_configs.MongoAccountConfig',
-    'config.mongo_app_configs.MongoSocialAccountConfig',
+    'allauth.account',
+    'allauth.socialaccount',
     'allauth.socialaccount.providers.discord',
 
-    # Local apps
     'accounts',
     'dashboard',
     'bots',
@@ -104,35 +101,22 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_mongodb_backend',
-        'NAME': env('MONGO_DB_NAME'),
-        'USER': env('MONGO_USER'),
-        'PASSWORD': env('MONGO_PASS'),
-        'HOST': '13.212.150.216',
-        'PORT': 27017,
-        'CLIENT': {
-            'authSource': env('MONGO_AUTH_SOURCE'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
     }
 }
 
 # Bypass all app migration files (which hardcode AutoField) and
 # force Django to use syncdb, which respects DEFAULT_AUTO_FIELD.
-MIGRATION_MODULES = {
-    # Django built-in apps
-    'admin': None,
-    'auth': None,
-    'contenttypes': None,
-    'sessions': None,
-    'messages': None,
-    # allauth
-    'account': None,
-    'socialaccount': None,
-    # Local apps
-    'accounts': None,
-    'bots': None,
-    'dashboard': None,
-}
+# Migrations are now enabled for MariaDB
+MIGRATION_MODULES = {}
 
 
 # Password validation
@@ -188,7 +172,7 @@ WHITENOISE_USE_FINDERS = True
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django_mongodb_backend.fields.ObjectIdAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.CustomUser'
@@ -220,5 +204,5 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SOCIALACCOUNT_ADAPTER = 'accounts.adapter.DiscordAdapter'
 
-# Store tokens in MongoDB
+# Store tokens in MariaDB
 SOCIALACCOUNT_STORE_TOKENS = True

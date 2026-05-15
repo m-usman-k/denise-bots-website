@@ -4,7 +4,7 @@ django-allauth[socialaccount]
 requests
 whitenoise
 gunicorn
-pymongo
-dnspython
+mysqlclient
+mysql-connector-python
 python-dotenv
-django-mongodb-backend
+pymysql
