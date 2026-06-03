@@ -8,11 +8,11 @@ load_dotenv()
 
 class SharedDatabase:
     def __init__(self):
-        self.host = os.getenv("DB_HOST", "127.0.0.1")
+        self.host = os.getenv("DB_HOST")
         self.port = int(os.getenv("DB_PORT", 3306))
-        self.user = os.getenv("DB_USER", "simpleprog")
-        self.password = os.getenv("DB_PASSWORD", "jf83hj032fjkldsa")
-        self.database = os.getenv("DB_NAME", "simpleprog_db")
+        self.user = os.getenv("DB_USER")
+        self.password = os.getenv("DB_PASSWORD")
+        self.database = os.getenv("DB_NAME")
         self._init_db()
 
     def get_connection(self):
