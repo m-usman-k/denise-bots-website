@@ -49,7 +49,6 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -219,3 +218,11 @@ SOCIALACCOUNT_ADAPTER = 'accounts.adapter.DiscordAdapter'
 
 # Store tokens in MariaDB
 SOCIALACCOUNT_STORE_TOKENS = True
+
+# Django Channels - Channel Layer
+# Using InMemoryChannelLayer for single-server deployments (no Redis needed)
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
