@@ -184,7 +184,14 @@
                         </form>
                     </td>
                     <td style="padding:0.5rem;">
-                        <!-- Optional additional actions -->
+                        <form method="POST" style="margin:0;" onsubmit="return confirm('Remove this user from the category?');">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="edit_user_donation">
+                            <input type="hidden" name="category" value="{{ cat }}">
+                            <input type="hidden" name="user_id" value="{{ d.0 }}">
+                            <input type="hidden" name="amount" value="0">
+                            <button type="submit" class="btn" style="color:#f44336; background:transparent; padding:2px 8px; height:28px; font-size:0.8rem;"><i class="ph ph-trash"></i></button>
+                        </form>
                     </td>
                 </tr>
                 {% empty %}
