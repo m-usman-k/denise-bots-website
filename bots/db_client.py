@@ -1,13 +1,18 @@
 import mysql.connector
 import json
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class SharedDatabase:
     def __init__(self):
-        self.host = "13.212.150.216"
-        self.port = 3306
-        self.user = "simpleprog"
-        self.password = "jf83hj032fjkldsa"
-        self.database = "simpleprog_db"
+        self.host = os.getenv("DB_HOST", "127.0.0.1")
+        self.port = int(os.getenv("DB_PORT", 3306))
+        self.user = os.getenv("DB_USER", "simpleprog")
+        self.password = os.getenv("DB_PASSWORD", "jf83hj032fjkldsa")
+        self.database = os.getenv("DB_NAME", "simpleprog_db")
         self._init_db()
 
     def get_connection(self):
