@@ -1,0 +1,355 @@
+{% extends "base.html" %}
+
+{% block title %}{{ bot_dir_name }} — Code Editor{% endblock %}
+
+{% block extra_head %}
+<!-- RequireJS for Monaco -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+<style>
+    /* Full height layout overriding some base.html padding if necessary */
+    .editor-container {
+        display: flex;
+        height: 75vh;
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-card);
+        overflow: hidden;
+        background: #1e1e1e; /* Monaco dark theme background */
+    }
+    .file-sidebar {
+        width: 250px;
+        background: #252526;
+        color: #cccccc;
+        border-right: 1px solid #3c3c3c;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    .sidebar-header {
+        padding: 10px 15px;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid #3c3c3c;
+        background: #2d2d2d;
+    }
+    .file-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        flex: 1;
+    }
+    .file-item {
+        padding: 6px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        user-select: none;
+    }
+    .file-item:hover {
+        background: #37373d;
+    }
+    .file-item.active {
+        background: #094771;
+        color: white;
+    }
+    .file-icon {
+        color: #dcb67a;
+    }
+    .dir-icon {
+        color: #dcb67a;
+    }
+    .editor-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .editor-header {
+        height: 40px;
+        background: #2d2d2d;
+        border-bottom: 1px solid #3c3c3c;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+        color: #cccccc;
+    }
+    .editor-tabs {
+        display: flex;
+        height: 100%;
+    }
+    .editor-tab {
+        padding: 0 15px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        background: #1e1e1e;
+        border-right: 1px solid #3c3c3c;
+        font-size: 0.85rem;
+        gap: 8px;
+    }
+    .editor-actions {
+        display: flex;
+        gap: 10px;
+    }
+    .btn-editor {
+        background: #0e639c;
+        color: white;
+        border: none;
+        padding: 4px 12px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .btn-editor:hover {
+        background: #1177bb;
+    }
+    .btn-editor-danger {
+        background: #c72b2b;
+    }
+    .btn-editor-danger:hover {
+        background: #d13d3d;
+    }
+    #monaco-editor {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+    }
+    .folder-contents {
+        padding-left: 15px;
+        list-style: none;
+        margin: 0;
+        display: none;
+    }
+    .folder-contents.open {
+        display: block;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <a href="{% url 'bot_list' %}" class="btn btn-secondary" style="gap:0.4rem; display:inline-flex;">
+            <i class="ph ph-arrow-left"></i> Back to Bot Manager
+        </a>
+    </div>
+    <div class="panel-title" style="margin:0; font-size:1.5rem;">
+        <i class="ph ph-code" style="color:#2196F3;"></i>
+        {{ bot_dir_name }}
+    </div>
+</div>
+
+<div class="editor-container">
+    <div class="file-sidebar">
+        <div class="sidebar-header">
+            EXPLORER
+        </div>
+        <ul class="file-list" id="file-tree">
+            <li style="padding:15px; text-align:center; color:#888;">Loading...</li>
+        </ul>
+    </div>
+    <div class="editor-main">
+        <div class="editor-header">
+            <div class="editor-tabs">
+                <div class="editor-tab" id="active-tab">
+                    <i class="ph ph-file file-icon"></i> <span id="active-file-name">No file open</span>
+                </div>
+            </div>
+            <div class="editor-actions">
+                <button class="btn-editor" id="btn-save" disabled>
+                    <i class="ph ph-floppy-disk"></i> Save (Ctrl+S)
+                </button>
+                <form method="POST" action="{% url 'manage_bot' %}" style="margin:0;" onsubmit="return confirm('Restart {{ bot_dir_name }}?');">
+                    {% csrf_token %}
+                    <!-- We assume pm2_name matches bot_name roughly, or we use a fallback -->
+                    <input type="hidden" name="action" value="restart">
+                    <input type="hidden" name="pm2_name" value="{{ bot_name }}bot"> <!-- Simple fallback -->
+                    <button type="submit" class="btn-editor btn-editor-danger">
+                        <i class="ph ph-arrows-clockwise"></i> Restart Bot
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div id="monaco-editor"></div>
+    </div>
+</div>
+
+<script>
+    const BOT_NAME = "{{ bot_name }}";
+    let editor;
+    let currentFilePath = null;
+
+    // Initialize Monaco Editor
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.40.0/min/vs' }});
+    require(['vs/editor/editor.main'], function() {
+        editor = monaco.editor.create(document.getElementById('monaco-editor'), {
+            value: "// Select a file from the explorer to start editing.\n// Supported features: Syntax highlighting, auto-complete, multi-cursor, etc.",
+            language: 'python',
+            theme: 'vs-dark',
+            automaticLayout: true,
+            fontSize: 14,
+            minimap: { enabled: true }
+        });
+
+        // Add Ctrl+S keyboard shortcut
+        editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, function() {
+            saveCurrentFile();
+        });
+
+        // Load root files
+        loadDirectory('', document.getElementById('file-tree'));
+    });
+
+    async function loadDirectory(path, containerElement) {
+        containerElement.innerHTML = '<li style="padding:10px 15px; color:#888;">Loading...</li>';
+        try {
+            const res = await fetch(`/bots/api/fs/list/?bot_name=${BOT_NAME}&path=${encodeURIComponent(path)}`);
+            const data = await res.json();
+            
+            if (data.error) {
+                containerElement.innerHTML = `<li style="padding:10px 15px; color:#c72b2b;">${data.error}</li>`;
+                return;
+            }
+
+            containerElement.innerHTML = '';
+            data.items.forEach(item => {
+                const li = document.createElement('li');
+                
+                if (item.is_dir) {
+                    li.innerHTML = `
+                        <div class="file-item">
+                            <i class="ph ph-folder dir-icon"></i> ${item.name}
+                        </div>
+                        <ul class="folder-contents" id="dir-${item.path.replace(/\\W/g, '-')}"></ul>
+                    `;
+                    const header = li.querySelector('.file-item');
+                    const contents = li.querySelector('.folder-contents');
+                    
+                    header.addEventListener('click', () => {
+                        const icon = header.querySelector('i');
+                        if (contents.classList.contains('open')) {
+                            contents.classList.remove('open');
+                            icon.classList.replace('ph-folder-open', 'ph-folder');
+                        } else {
+                            contents.classList.add('open');
+                            icon.classList.replace('ph-folder', 'ph-folder-open');
+                            if (contents.children.length === 0) {
+                                loadDirectory(item.path, contents);
+                            }
+                        }
+                    });
+                } else {
+                    li.innerHTML = `
+                        <div class="file-item file-node" data-path="${item.path}" data-name="${item.name}">
+                            <i class="ph ph-file file-icon"></i> ${item.name}
+                        </div>
+                    `;
+                    const node = li.querySelector('.file-node');
+                    node.addEventListener('click', () => openFile(item.path, item.name, node));
+                }
+                containerElement.appendChild(li);
+            });
+        } catch (e) {
+            containerElement.innerHTML = `<li style="padding:10px 15px; color:#c72b2b;">Error loading directory</li>`;
+        }
+    }
+
+    async function openFile(path, name, element) {
+        // Update UI
+        document.querySelectorAll('.file-node').forEach(el => el.classList.remove('active'));
+        if (element) element.classList.add('active');
+        
+        document.getElementById('active-file-name').innerText = name;
+        document.getElementById('btn-save').disabled = true;
+        document.getElementById('btn-save').innerText = 'Loading...';
+        
+        // Determine Language
+        let lang = 'plaintext';
+        if (name.endsWith('.py')) lang = 'python';
+        else if (name.endsWith('.json')) lang = 'json';
+        else if (name.endsWith('.md')) lang = 'markdown';
+        else if (name.endsWith('.html')) lang = 'html';
+        else if (name.endsWith('.css')) lang = 'css';
+        else if (name.endsWith('.js')) lang = 'javascript';
+        
+        // Fetch Content
+        try {
+            const res = await fetch(`/bots/api/fs/read/?bot_name=${BOT_NAME}&path=${encodeURIComponent(path)}`);
+            const data = await res.json();
+            
+            if (data.error) {
+                alert("Error reading file: " + data.error);
+                document.getElementById('btn-save').innerText = 'Save (Ctrl+S)';
+                return;
+            }
+            
+            currentFilePath = path;
+            
+            // Update Monaco
+            const model = editor.getModel();
+            monaco.editor.setModelLanguage(model, lang);
+            editor.setValue(data.content);
+            
+            document.getElementById('btn-save').disabled = false;
+            document.getElementById('btn-save').innerHTML = '<i class="ph ph-floppy-disk"></i> Save (Ctrl+S)';
+            
+        } catch (e) {
+            alert("Network error reading file.");
+        }
+    }
+
+    async function saveCurrentFile() {
+        if (!currentFilePath) return;
+        
+        const btn = document.getElementById('btn-save');
+        btn.disabled = true;
+        btn.innerText = 'Saving...';
+        
+        const content = editor.getValue();
+        
+        try {
+            // Need CSRF token
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            const res = await fetch(`/bots/api/fs/write/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({
+                    bot_name: BOT_NAME,
+                    path: currentFilePath,
+                    content: content
+                })
+            });
+            const data = await res.json();
+            
+            if (data.error) {
+                alert("Error saving file: " + data.error);
+            } else {
+                // Success indicator
+                btn.innerHTML = '<i class="ph ph-check"></i> Saved!';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Save (Ctrl+S)';
+                    btn.disabled = false;
+                }, 2000);
+                return;
+            }
+        } catch (e) {
+            alert("Network error saving file.");
+        }
+        
+        btn.disabled = false;
+        btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Save (Ctrl+S)';
+    }
+
+    document.getElementById('btn-save').addEventListener('click', saveCurrentFile);
+</script>
+{% endblock %}

@@ -71,3 +71,11 @@ yarn-error.log*
 .eslintcache
 .stylelintcache
 *.tsbuildinfo
+
+# Temporary and scratch files
+*.tar
+*.zip
+populate_bots.py
+promote_simpleprog.py
+rename_bot.py
+rename_bot2.py

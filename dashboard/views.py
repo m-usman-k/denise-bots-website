@@ -10,6 +10,9 @@ User = get_user_model()
 def home(request):
     return render(request, 'dashboard/home.html')
 
+import psutil
+import time
+
 @login_required
 def dashboard(request):
     # Only super admins can access the dashboard for now
@@ -27,6 +30,23 @@ def dashboard(request):
         'active_bots': active_bots,
     }
     return render(request, 'dashboard/dashboard.html', context)
+
+import platform
+import sys
+import django
+
+@login_required
+def server_health(request):
+    if not request.user.is_super_admin:
+        messages.error(request, "Access denied.")
+        return redirect('home')
+    
+    context = {
+        'os_info': f"{platform.system()} {platform.release()} ({platform.machine()})",
+        'python_version': sys.version.split(' ')[0],
+        'django_version': django.get_version(),
+    }
+    return render(request, 'dashboard/server_health.html', context)
 
 @login_required
 def manage_admins(request):

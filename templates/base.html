@@ -45,6 +45,21 @@
                         <i class="ph ph-squares-four"></i>
                         <span>Dashboard</span>
                     </a>
+                    
+                    {% if user.is_super_admin %}
+                    <a href="{% url 'server_health' %}"
+                       class="nav-link {% if request.resolver_match.url_name == 'server_health' %}active{% endif %}">
+                        <i class="ph ph-heartbeat"></i>
+                        <span>Server Health</span>
+                    </a>
+                    
+                    <a href="{% url 'bot_list' %}"
+                       class="nav-link {% if request.resolver_match.url_name == 'bot_list' %}active{% endif %}">
+                        <i class="ph ph-cpu"></i>
+                        <span>Bot Manager</span>
+                    </a>
+                    
+                    {% endif %}
 
                     <!-- Avatar-only pill with hover dropdown -->
                     <div class="nav-user" tabindex="0">

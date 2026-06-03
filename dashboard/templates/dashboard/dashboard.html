@@ -57,6 +57,8 @@
 
 </div>
 
+
+
 <!-- ══════════════════════════════════
      BOT COLLECTION HEADING
 ══════════════════════════════════ -->
@@ -68,10 +70,20 @@
 <!-- ══════════════════════════════════
      FEATURE CARDS
 ══════════════════════════════════ -->
+<style>
+    .feature-card {
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+</style>
 <div class="cards-grid">
 
     <!-- Donations -->
-    <div class="feature-card">
+    <div class="feature-card" onclick="window.location.href='{% url 'bot_detail' 'donations' %}'">
         <div class="card-icon-wrap card-icon-purple">
             <i class="ph ph-heart" style="font-size:1.5rem;"></i>
         </div>
@@ -83,14 +95,14 @@
         <div class="status-badge status-badge-active">
             <span class="status-dot status-dot-active"></span> Active
         </div>
-        <a href="{% url 'bot_detail' 'donations' %}" class="btn-manage">
+        <a href="{% url 'bot_detail' 'donations' %}" class="btn-manage" onclick="event.stopPropagation()">
             Manage
             <span class="btn-manage-arrow">›</span>
         </a>
     </div>
 
     <!-- Giveaways -->
-    <div class="feature-card">
+    <div class="feature-card" onclick="window.location.href='{% url 'bot_detail' 'giveaway' %}'">
         <div class="card-icon-wrap card-icon-pink">
             <i class="ph ph-gift" style="font-size:1.5rem;"></i>
         </div>
@@ -102,14 +114,14 @@
         <div class="status-badge status-badge-active">
             <span class="status-dot status-dot-active"></span> Active
         </div>
-        <a href="{% url 'bot_detail' 'giveaway' %}" class="btn-manage">
+        <a href="{% url 'bot_detail' 'giveaway' %}" class="btn-manage" onclick="event.stopPropagation()">
             Manage
             <span class="btn-manage-arrow">›</span>
         </a>
     </div>
 
     <!-- Reputation -->
-    <div class="feature-card">
+    <div class="feature-card" onclick="window.location.href='{% url 'bot_detail' 'reputation' %}'">
         <div class="card-icon-wrap card-icon-purple">
             <i class="ph ph-star" style="font-size:1.5rem;"></i>
         </div>
@@ -121,26 +133,45 @@
         <div class="status-badge status-badge-active">
             <span class="status-dot status-dot-active"></span> Active
         </div>
-        <a href="{% url 'bot_detail' 'reputation' %}" class="btn-manage">
+        <a href="{% url 'bot_detail' 'reputation' %}" class="btn-manage" onclick="event.stopPropagation()">
             Manage
             <span class="btn-manage-arrow">›</span>
         </a>
     </div>
 
-    <!-- Support -->
-    <div class="feature-card">
+    <!-- Tickets Bot -->
+    <div class="feature-card" onclick="window.location.href='{% url 'bot_detail' 'ticket' %}'">
         <div class="card-icon-wrap card-icon-blue">
-            <i class="ph ph-headset" style="font-size:1.5rem;"></i>
+            <i class="ph ph-ticket" style="font-size:1.5rem;"></i>
         </div>
         <div class="card-sparkle-dots">
             <span></span><span></span>
         </div>
-        <div class="card-title">Support</div>
+        <div class="card-title">Tickets Bot</div>
         <p class="card-desc">Help is just a click away! Manage support tickets in a friendly and organized way.</p>
         <div class="status-badge status-badge-active">
             <span class="status-dot status-dot-active"></span> Active
         </div>
-        <a href="{% url 'bot_detail' 'ticket' %}" class="btn-manage">
+        <a href="{% url 'bot_detail' 'ticket' %}" class="btn-manage" onclick="event.stopPropagation()">
+            Manage
+            <span class="btn-manage-arrow">›</span>
+        </a>
+    </div>
+    
+    <!-- WinTracker -->
+    <div class="feature-card" onclick="window.location.href='{% url 'bot_detail' 'wintracker' %}'">
+        <div class="card-icon-wrap" style="background:#E8F5E9; color:#4CAF50;">
+            <i class="ph ph-trophy" style="font-size:1.5rem;"></i>
+        </div>
+        <div class="card-sparkle-dots">
+            <span></span><span></span>
+        </div>
+        <div class="card-title">WinTracker</div>
+        <p class="card-desc">Track member victories and showcase your community's top performers.</p>
+        <div class="status-badge status-badge-active">
+            <span class="status-dot status-dot-active"></span> Active
+        </div>
+        <a href="{% url 'bot_detail' 'wintracker' %}" class="btn-manage" onclick="event.stopPropagation()">
             Manage
             <span class="btn-manage-arrow">›</span>
         </a>

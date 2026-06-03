@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Console Logs - {{ pm2_name }}{% endblock %}
+
+{% block content %}
+<style>
+    .main-panel {
+        max-width: 95% !important; /* Make the console window take almost the whole screen width */
+    }
+</style>
+<div class="panel-title">
+    <i class="ph ph-terminal-window" style="font-size:1.4rem; color:#F5C84A;"></i>
+    Live Console: {{ pm2_name }}
+</div>
+<p class="panel-subtitle">Displaying the most recent 100 lines of console output.</p>
+<hr class="panel-divider">
+
+<div style="margin-bottom: 1rem; display: flex; gap: 10px;">
+    <a href="{% url 'bot_logs' pm2_name %}" class="btn btn-secondary" style="background: #2196F3; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;"><i class="ph ph-arrows-clockwise"></i> Refresh Logs</a>
+    <a href="{% url 'bot_list' %}" class="btn btn-secondary" style="background: rgba(255,255,255,0.8); color: #333; border: 1px solid #ddd; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;"><i class="ph ph-arrow-left"></i> Back to Manager</a>
+</div>
+
+<!-- Extra wide wrapper to break out of normal page container if needed, but styling to make it huge -->
+<div style="width: 100%; height: 75vh; min-height: 500px; background: #1e1e1e; color: #a6e22e; padding: 1.5rem; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; white-space: pre-wrap; word-wrap: break-word; overflow-y: auto; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
+{% if logs_content %}
+{{ logs_content }}
+{% else %}
+Waiting for logs... (Or the console is empty).
+{% endif %}
+</div>
+
+{% endblock %}

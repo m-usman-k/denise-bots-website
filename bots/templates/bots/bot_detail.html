@@ -47,18 +47,10 @@
             {% for item in data %}
             <tr>
                 <td style="font-weight:700; color:var(--text-heading);">
-                    {{ item.id|default:item.guid|default:item.user_id|default:"—" }}
+                    {{ item.id_val }}
                 </td>
                 <td>
-                    {% if bot_name == 'giveaway' %}
-                        Prize: <strong>{{ item.prize }}</strong> &nbsp;|&nbsp; Winners: <strong>{{ item.winners }}</strong>
-                    {% elif bot_name == 'reputation' %}
-                        Member: <strong>{{ item.user_id }}</strong> &nbsp;|&nbsp; Points: <strong>{{ item.points }}</strong>
-                    {% elif bot_name == 'ticket' %}
-                        Ticket <strong>#{{ item.id }}</strong> &nbsp;|&nbsp; Status: <strong>{{ item.status }}</strong>
-                    {% else %}
-                        {{ item }}
-                    {% endif %}
+                    {{ item.details_val }}
                 </td>
                 <td>
                     <button class="btn btn-secondary" style="padding:0.35rem 0.9rem; font-size:0.8rem;">

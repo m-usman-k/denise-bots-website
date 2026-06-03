@@ -16,11 +16,60 @@
     <i class="ph ph-heart" style="color:#E87CA0;"></i>
     Donations Management
 </div>
-<p class="panel-subtitle">Manage categories, view donors, and configure autoroles.</p>
+<p class="panel-subtitle">Manage categories, view donors, configure autoroles, and assign Administrators.</p>
 <hr class="panel-divider">
 
-<div class="cards-grid">
-    <!-- Categories List -->
+<div class="cards-grid" style="grid-template-columns: 1fr 1fr;">
+
+    <!-- 1. Administrators (Managers) -->
+    <div style="background:var(--bg-card-white); border:1px solid var(--border-default); border-radius:var(--radius-card); padding:1.75rem;">
+        <div class="section-heading" style="margin-bottom: 1rem;">
+            <i class="ph ph-shield-star"></i> Donation Administrators
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Roles that can use Donation bot commands.</p>
+        
+        <div style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem;">
+            {% for manager in managers %}
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:0.6rem 1rem; background:#FAF8FF; border:1px solid #E8E4F0; border-radius:8px;">
+                    <span style="font-weight:600; font-family:monospace;">Role ID: {{ manager }}</span>
+                    <form method="POST" style="margin:0;">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="remove_manager">
+                        <input type="hidden" name="role_id" value="{{ manager }}">
+                        <button type="submit" class="btn" style="color:#f44336; background:transparent; padding:0;"><i class="ph ph-trash"></i></button>
+                    </form>
+                </div>
+            {% empty %}
+                <div style="font-size:0.85rem; color:var(--text-muted);">No managers assigned.</div>
+            {% endfor %}
+        </div>
+        
+        <form method="POST" style="display:flex; gap:10px;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_manager">
+            <input type="text" name="role_id" placeholder="Discord Role ID" class="form-control" style="flex:1;" required>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+
+    <!-- 2. Settings -->
+    <div style="background:var(--bg-card-lavender); border:1px solid var(--border-lavender); border-radius:var(--radius-card); padding:1.75rem;">
+        <div class="section-heading" style="margin-bottom: 1rem;">
+            <i class="ph ph-gear"></i> Bot Settings
+        </div>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="update_settings">
+            <div style="margin-bottom:1rem;">
+                <label style="font-weight:600; font-size:0.85rem; display:block; margin-bottom:0.4rem;">Log Channel ID</label>
+                <input type="text" name="log_channel_id" value="{{ settings.log_channel_id|default:'' }}" placeholder="1234567890" class="form-control" style="width:100%;">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Save Settings</button>
+        </form>
+    </div>
+
+    <!-- 3. Categories -->
     <div style="background:var(--bg-card-white); border:1px solid var(--border-default); border-radius:var(--radius-card); padding:1.75rem; grid-column: span 2;">
         <div class="section-heading" style="margin-bottom: 1rem;">
             <i class="ph ph-list-dashes"></i> Categories
@@ -29,10 +78,13 @@
         <div style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem;">
             {% for category in categories %}
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:0.8rem 1rem; background:#FAF8FF; border:1px solid #E8E4F0; border-radius:10px;">
-                    <span style="font-weight:700; color:var(--text-heading);">{{ category.name }}</span>
-                    <button class="btn btn-secondary" style="padding:0.3rem 0.7rem; font-size:0.8rem;">
-                        <i class="ph ph-pencil-simple"></i> Edit
-                    </button>
+                    <span style="font-weight:700; color:var(--text-heading);">{{ category }}</span>
+                    <form method="POST" style="margin:0;" onsubmit="return confirm('Delete this category?');">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="delete_category">
+                        <input type="hidden" name="name" value="{{ category }}">
+                        <button type="submit" class="btn" style="color:#f44336; background:transparent;"><i class="ph ph-trash"></i> Delete</button>
+                    </form>
                 </div>
             {% empty %}
                 <div style="padding:2rem; text-align:center; color:var(--text-muted); font-size:0.9rem; background:#FAF8F2; border-radius:10px;">
@@ -42,29 +94,123 @@
             {% endfor %}
         </div>
         
-        <button class="btn btn-primary" style="width:100%; justify-content:center;">
-            <i class="ph ph-plus"></i> Create Category
-        </button>
+        <form method="POST" style="display:flex; gap:10px;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="create_category">
+            <input type="text" name="name" placeholder="New Category Name" class="form-control" style="flex:1;" required>
+            <button type="submit" class="btn btn-primary"><i class="ph ph-plus"></i> Create</button>
+        </form>
     </div>
 
-    <!-- Quick Stats -->
-    <div style="background:var(--bg-card-lavender); border:1px solid var(--border-lavender); border-radius:var(--radius-card); padding:1.75rem;">
-        <div class="section-heading" style="margin-bottom: 1.5rem;">
-            <i class="ph ph-chart-bar"></i> Quick Stats
+    <!-- 4. Auto Roles -->
+    <div style="background:var(--bg-card-white); border:1px solid var(--border-default); border-radius:var(--radius-card); padding:1.75rem; grid-column: span 2;">
+        <div class="section-heading" style="margin-bottom: 1rem;">
+            <i class="ph ph-magic-wand"></i> Auto Roles
         </div>
         
-        <div style="display:flex; flex-direction:column; gap:1.25rem;">
-            <div>
-                <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.25rem; letter-spacing:0.05em;">Total Categories</div>
-                <div style="font-size:1.8rem; font-weight:800; color:var(--accent-purple); line-height:1;">{{ categories|length }}</div>
-            </div>
-            
-            <div style="border-top:1px dashed #C8C0F0; padding-top:1.25rem;">
-                <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.25rem; letter-spacing:0.05em;">Total Donations</div>
-                <div style="font-size:1.4rem; font-weight:800; color:var(--accent-purple); line-height:1;">Coming Soon</div>
-            </div>
-        </div>
+        <table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+            <tr style="background:#f4f4f4; text-align:left;">
+                <th style="padding:0.5rem;">Category</th>
+                <th style="padding:0.5rem;">Threshold Amount</th>
+                <th style="padding:0.5rem;">Role ID</th>
+                <th style="padding:0.5rem;"></th>
+            </tr>
+            {% for ar in autoroles %}
+            <tr style="border-bottom:1px solid #eee;">
+                <td style="padding:0.5rem;">{{ ar.category_name }}</td>
+                <td style="padding:0.5rem; font-weight:bold;">{{ ar.threshold }}</td>
+                <td style="padding:0.5rem; font-family:monospace;">{{ ar.role_id }}</td>
+                <td style="padding:0.5rem; text-align:right;">
+                    <form method="POST" style="margin:0;">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="remove_autorole">
+                        <input type="hidden" name="category" value="{{ ar.category_name }}">
+                        <input type="hidden" name="threshold" value="{{ ar.threshold }}">
+                        <input type="hidden" name="role_id" value="{{ ar.role_id }}">
+                        <button type="submit" style="color:red; background:none; border:none; cursor:pointer;"><i class="ph ph-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <form method="POST" style="display:flex; gap:10px; align-items:center;">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_autorole">
+            <select name="category" class="form-control" required>
+                {% for c in categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+            </select>
+            <input type="number" name="threshold" placeholder="Amount" class="form-control" required>
+            <input type="text" name="role_id" placeholder="Role ID to grant" class="form-control" required>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
     </div>
+
+    <!-- 5. Donors Leaderboard -->
+    <div style="background:var(--bg-card-white); border:1px solid var(--border-default); border-radius:var(--radius-card); padding:1.75rem; grid-column: span 2;">
+        <div class="section-heading" style="margin-bottom: 1rem;">
+            <i class="ph ph-users"></i> Donors & Leaderboard
+        </div>
+        
+        <div class="tabs" style="display:flex; gap:10px; margin-bottom:1rem; border-bottom:1px solid #E8E4F0; padding-bottom:10px; overflow-x:auto;">
+            {% for cat in categories %}
+            <button class="btn {% if forloop.first %}btn-primary{% else %}btn-secondary{% endif %}" onclick="showCat('{{ cat|escapejs }}')" id="tab-{{ cat|escapejs }}">
+                {{ cat }}
+            </button>
+            {% endfor %}
+        </div>
+
+        {% for cat, cat_donors in donors.items %}
+        <div id="cat-{{ cat|escapejs }}" class="cat-content" style="{% if not forloop.first %}display:none;{% endif %}">
+            <table style="width:100%; border-collapse:collapse; margin-bottom:1.5rem;">
+                <tr style="background:#f4f4f4; text-align:left;">
+                    <th style="padding:0.5rem;">Rank</th>
+                    <th style="padding:0.5rem;">User ID</th>
+                    <th style="padding:0.5rem;">Amount</th>
+                    <th style="padding:0.5rem;">Update</th>
+                </tr>
+                {% for d in cat_donors %}
+                <tr style="border-bottom:1px solid #eee;">
+                    <td style="padding:0.5rem; font-weight:bold; color:var(--accent-purple);">#{{ forloop.counter }}</td>
+                    <td style="padding:0.5rem; font-family:monospace;">{{ d.0 }}</td>
+                    <td style="padding:0.5rem;">
+                        <form method="POST" style="margin:0; display:flex; gap:5px;">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="edit_user_donation">
+                            <input type="hidden" name="category" value="{{ cat }}">
+                            <input type="hidden" name="user_id" value="{{ d.0 }}">
+                            <input type="number" name="amount" value="{{ d.1 }}" class="form-control" style="width:100px; padding:2px 5px; height:28px;">
+                            <button type="submit" class="btn btn-secondary" style="padding:2px 8px; height:28px; font-size:0.8rem;">Save</button>
+                        </form>
+                    </td>
+                    <td style="padding:0.5rem;">
+                        <!-- Optional additional actions -->
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="padding:1rem; text-align:center; color:gray;">No donors in this category.</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endfor %}
+
+        <script>
+            function showCat(catName) {
+                document.querySelectorAll('.cat-content').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.tabs button').forEach(el => {
+                    el.classList.remove('btn-primary');
+                    el.classList.add('btn-secondary');
+                });
+                
+                document.getElementById('cat-' + catName).style.display = 'block';
+                document.getElementById('tab-' + catName).classList.remove('btn-secondary');
+                document.getElementById('tab-' + catName).classList.add('btn-primary');
+            }
+        </script>
+    </div>
+
 </div>
 
 {% endblock %}
