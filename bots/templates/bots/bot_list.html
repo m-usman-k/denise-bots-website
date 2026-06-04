@@ -21,36 +21,36 @@
 </div>
 {% endif %}
 
-<div class="table-container"
-    style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; backdrop-filter: blur(10px); overflow-x: auto; width: 100%;">
-    <table style="width: 100%; text-align: left; border-collapse: collapse;">
+<div class="table-wrap">
+    <div style="overflow-x: auto;">
+        <table class="kawaii-table">
         <thead>
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <tr>
                 <th style="padding: 1rem;">Bot Name</th>
                 <th class="hide-on-mobile" style="padding: 1rem;">PM2 Process</th>
                 <th style="padding: 1rem;">Status</th>
                 <th class="hide-on-mobile" style="padding: 1rem;">Uptime</th>
                 <th class="hide-on-mobile" style="padding: 1rem;">CPU</th>
                 <th class="hide-on-mobile" style="padding: 1rem;">Memory</th>
-                <th style="padding: 1rem; text-align: right;">Actions</th>
+                <th style="text-align: right;">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for item in bot_data %}
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                <td style="padding: 1rem; font-weight: bold;">{{ item.bot.name }}</td>
-                <td class="hide-on-mobile" style="padding: 1rem; font-family: monospace; color: #aaa;">{{ item.pm2_name }}</td>
-                <td style="padding: 1rem;" id="ws-status-{{ item.pm2_name }}">
+            <tr>
+                <td style="font-weight: bold; color: var(--accent-purple);">{{ item.bot.name }}</td>
+                <td class="hide-on-mobile" style="font-family: monospace; color: var(--text-muted);">{{ item.pm2_name }}</td>
+                <td id="ws-status-{{ item.pm2_name }}">
                     {% if item.status == 'online' %}
-                    <span style="color: #4CAF50; font-weight: bold;">&#9679; Online</span>
+                    <span class="status-badge status-badge-active" style="margin-bottom:0;"><span class="status-dot status-dot-active"></span> Online</span>
                     {% else %}
-                    <span style="color: #f44336; font-weight: bold;">&#9675; {{ item.status|title }}</span>
+                    <span class="status-badge" style="background:#F5C8C8; color:#901818; margin-bottom:0;"><span class="status-dot status-dot-inactive"></span> {{ item.status|title }}</span>
                     {% endif %}
                 </td>
-                <td class="hide-on-mobile" style="padding: 1rem;" id="ws-uptime-{{ item.pm2_name }}">{{ item.uptime }}</td>
-                <td class="hide-on-mobile" style="padding: 1rem;" id="ws-cpu-{{ item.pm2_name }}">{{ item.cpu }}%</td>
-                <td class="hide-on-mobile" style="padding: 1rem;" id="ws-mem-{{ item.pm2_name }}">{{ item.memory }} MB</td>
-                <td style="padding: 1rem; text-align: right;">
+                <td class="hide-on-mobile" id="ws-uptime-{{ item.pm2_name }}">{{ item.uptime }}</td>
+                <td class="hide-on-mobile" id="ws-cpu-{{ item.pm2_name }}">{{ item.cpu }}%</td>
+                <td class="hide-on-mobile" id="ws-mem-{{ item.pm2_name }}">{{ item.memory }} MB</td>
+                <td style="text-align: right;">
                     <div style="display: flex; gap: 0.4rem; justify-content: flex-end; align-items: center;">
                         <form method="POST" action="{% url 'manage_bot' %}"
                             style="margin: 0; display: flex; gap: 0.4rem;">
@@ -97,12 +97,13 @@
             {% endfor %}
             {% if not bot_data %}
             <tr>
-                <td colspan="7" style="padding: 2rem; text-align: center; color: #aaa;">No bots found in the database.
+                <td colspan="7" style="padding: 2rem; text-align: center; color: var(--text-muted);">No bots found in the database.
                     Please make sure the bots are added to the Bot model.</td>
             </tr>
             {% endif %}
         </tbody>
     </table>
+    </div>
 </div>
 
 <script>
