@@ -832,12 +832,24 @@ input:focus, select:focus, textarea:focus {
 .animate-fade { animation: floatIn 0.55s ease-out both; }
 
 /* ══════════════════════════════════════════════
+   GRID UTILITIES
+══════════════════════════════════════════════ */
+.grid-1-1 { grid-template-columns: repeat(2, 1fr) !important; }
+.grid-1-2 { grid-template-columns: 1fr 2fr !important; }
+.grid-2-1 { grid-template-columns: 2fr 1fr !important; }
+.col-span-2 { grid-column: span 2 !important; }
+.col-span-3 { grid-column: span 3 !important; }
+.align-start { align-items: flex-start !important; }
+
+/* ══════════════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════════════ */
 @media (max-width: 900px) {
   .stats-grid    { grid-template-columns: repeat(2, 1fr); }
   .cards-grid    { grid-template-columns: repeat(2, 1fr); }
   .hero-features { grid-template-columns: repeat(2, 1fr); }
+  .grid-1-1, .grid-1-2, .grid-2-1 { grid-template-columns: 1fr !important; }
+  .col-span-2, .col-span-3 { grid-column: span 1 !important; }
 }
 
 @media (max-width: 640px) {
