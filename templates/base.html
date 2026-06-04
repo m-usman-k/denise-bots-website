@@ -58,7 +58,14 @@
                         <i class="ph ph-cpu"></i>
                         <span>Bot Manager</span>
                     </a>
-                    
+                    {% endif %}
+
+                    {% if user.is_main_admin %}
+                    <a href="{% url 'manage_admins' %}"
+                       class="nav-link {% if request.resolver_match.url_name == 'manage_admins' %}active{% endif %}">
+                        <i class="ph ph-users-three"></i>
+                        <span>Manage Admins</span>
+                    </a>
                     {% endif %}
 
                     <!-- Avatar-only pill with hover dropdown -->
