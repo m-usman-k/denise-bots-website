@@ -121,6 +121,47 @@ class SharedDatabase:
             role_id BIGINT PRIMARY KEY, threshold INT
         )''')
 
+        # Serenity Assistant
+        c.execute('''CREATE TABLE IF NOT EXISTS serenity_afk 
+                     (guild_id VARCHAR(255), user_id VARCHAR(255), reason TEXT, 
+                     PRIMARY KEY (guild_id, user_id))''')
+        c.execute('''CREATE TABLE IF NOT EXISTS serenity_config 
+                     (guild_id VARCHAR(255), config_key VARCHAR(255), config_value TEXT, 
+                     PRIMARY KEY (guild_id, config_key))''')
+        c.execute('''CREATE TABLE IF NOT EXISTS serenity_logs 
+                       (id BIGINT PRIMARY KEY AUTO_INCREMENT, 
+                       guild_id VARCHAR(255), log_type VARCHAR(255), description TEXT, timestamp TEXT)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS serenity_warnings 
+                       (id BIGINT PRIMARY KEY AUTO_INCREMENT, 
+                       guild_id VARCHAR(255), user_id VARCHAR(255), moderator VARCHAR(255), reason TEXT, timestamp TEXT)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS serenity_banned_words 
+                       (guild_id VARCHAR(255), word VARCHAR(255), PRIMARY KEY (guild_id, word))''')
+        c.execute('''CREATE TABLE IF NOT EXISTS serenity_rr_panels (
+              id          BIGINT PRIMARY KEY AUTO_INCREMENT,
+              guild_id    VARCHAR(255),
+              channel_id  VARCHAR(255),
+              message_id  VARCHAR(255),
+              title       TEXT,
+              description TEXT,
+              color       VARCHAR(50)
+          )''')
+        c.execute('''CREATE TABLE IF NOT EXISTS serenity_rr_entries (
+              id       BIGINT PRIMARY KEY AUTO_INCREMENT,
+              panel_id BIGINT,
+              role_id  VARCHAR(255),
+              label    VARCHAR(255),
+              emoji    VARCHAR(255),
+              style    VARCHAR(50)
+          )''')
+        c.execute('''CREATE TABLE IF NOT EXISTS serenity_stickies (
+              channel_id VARCHAR(255) PRIMARY KEY,
+              guild_id   VARCHAR(255),
+              title      TEXT,
+              content    TEXT,
+              message_id VARCHAR(255),
+              color      VARCHAR(50)
+          )''')
+
         conn.commit()
         conn.close()
 

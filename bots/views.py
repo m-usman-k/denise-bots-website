@@ -86,6 +86,7 @@ def bot_list(request):
         'Reputation': 'reputationbot',
         'Ticket': 'ticketbot',
         'WinTracker': 'wintrackerbot',
+        'Serenity': 'serenitybot',
     }
 
     bot_data = []
@@ -165,6 +166,8 @@ def bot_detail(request, bot_name):
         return render_ticket_dashboard(request, db, guild_id)
     elif bot_name == 'wintracker':
         return render_wintracker_dashboard(request, db)
+    elif bot_name == 'serenity':
+        return render_serenity_dashboard(request, db, guild_id)
     else:
         return redirect('dashboard')
 
@@ -258,6 +261,8 @@ def render_ticket_dashboard(request, db, guild_id):
     return render(request, 'bots/ticket_dashboard.html', {})
 def render_wintracker_dashboard(request, db):
     return render(request, 'bots/wintracker_dashboard.html', {})
+def render_serenity_dashboard(request, db, guild_id):
+    return render(request, 'bots/serenity_dashboard.html', {})
 
 @login_required
 def bot_logs(request, pm2_name):
@@ -296,13 +301,13 @@ import os
 from django.http import JsonResponse
 from pathlib import Path
 
-# Map database bot names to actual directory names on VPS
 BOT_DIR_MAP = {
     'donations': 'Donations Bot',
     'giveaway': 'Giveaway Bot',
     'reputation': 'Reputation Bot',
     'ticket': 'Ticket Bot',
     'wintracker': 'Win Tracker',
+    'serenity': 'serenity-assistant-2.0',
 }
 
 BASE_BOTS_PATH = "/home/ubuntu/denise-bots"
